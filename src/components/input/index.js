@@ -4,4 +4,4 @@ import "./style.less";
 
 Handlebars.registerPartial('input', tpl);
 
-export default (type, name, classes, placeholder, labelValue, errorValue) => tpl({type, name, classes, placeholder, labelValue, errorValue});
+export default (type, name, classes, placeholder, labelValue, errorValue, disabled) => tpl({type, name, classes, placeholder, labelValue, errorValue, disabled});
