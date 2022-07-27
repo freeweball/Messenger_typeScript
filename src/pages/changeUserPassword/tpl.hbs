@@ -1,0 +1,37 @@
+<form method="post" enctype="multipart/form-data" autocomplete="off">
+    <div class="userSettings">
+        {{> avatar}}
+        <ul class="userSettings__fields">
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Старый пароль"
+                    value="•••••••••"
+                    type = "password"
+                    name="password"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Новый пароль"
+                    value="•••••••••••"
+                    type = "password"
+                    name="password"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Повторите новый пароль"
+                    value="•••••••••••"
+                    type = "password"
+                    name="password"
+                }}
+            </li>
+        </ul>
+
+        {{> button
+            id="button__save"
+            value="Сохранить"
+            type="submit"
+        }}
+    </div>
+</form>

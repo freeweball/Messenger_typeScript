@@ -5,6 +5,6 @@ import './style.less';
 
 Handlebars.registerPartial('button', tpl);
 
-export default (id, value, classes) => {
-	return tpl({ id, value, classes });
+export default (id, value, classes, type) => {
+	return tpl({ id, value, classes, type });
 }

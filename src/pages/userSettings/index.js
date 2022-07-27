@@ -4,6 +4,6 @@ import './style.less';
 
 Handlebars.registerPartial('pageUserSettings', tpl);
 
-export default (title) => {
-    return tpl({title})
+export default (props = {}) => {
+    return tpl(props)
 }
