@@ -1,0 +1,59 @@
+<div class="userSettings">
+    {{> avatar}}
+    <ul class="userSettings__fields">
+        <li class="userSettings__field-text">
+            {{> fieldText
+                key="Почта"
+                value="pochta@yandex.ru"
+                disabled="disabled"
+                name="email"
+            }}
+        </li>
+        <li class="userSettings__field-text">
+            {{> fieldText
+                key="Логин"
+                value="ivanivanov"
+                disabled="disabled"
+                name="login"
+            }}
+        </li>
+        <li class="userSettings__field-text">
+            {{> fieldText
+                key="Имя"
+                value="Иван"
+                disabled="disabled"
+                name="first_name"
+            }}
+        </li>
+        <li class="userSettings__field-text">
+            {{> fieldText
+                key="Фамилия"
+                value="Иванов"
+                disabled="disabled"
+                name="second_name"
+            }}
+        </li>
+        <li class="userSettings__field-text">
+            {{> fieldText
+                key="Имя в чате"
+                value="Иван"
+                disabled="disabled"
+                name="name_in_chat"
+            }}
+        </li>
+        <li class="userSettings__field-text">
+            {{> fieldText
+                key="Телефон"
+                value="+7 (909) 967 30 30"
+                disabled="disabled"
+                name="phone"
+            }}
+        </li>
+    </ul>
+
+    <ul class="userSettings__fields">
+        <li class="userSettings__field-link">{{> fieldLink link="#" text="Изменить данные" classModif="userSettings-1"}}</li>
+        <li class="userSettings__field-link">{{> fieldLink link="#" text="Изменить пароль" classModif="userSettings-2"}}</li>
+        <li class="userSettings__field-link">{{> fieldLink link="#" text="Выйти" classModif="userSettings-2 fieldLink--red"}}</li>
+    </ul>
+</div>

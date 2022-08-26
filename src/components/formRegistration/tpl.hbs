@@ -1,0 +1,63 @@
+<form method="post" enctype="multipart/form-data" autocomplete="off">
+    <div class="form-registration__fields">
+        {{> input
+            type="email"
+            name="email"
+            classes="field__email"
+            placeholder="Почта"
+            labelValue="Почта"
+        }}
+        {{> input
+            type="text"
+            name="login"
+            classes="field__login"
+            placeholder="Логин"
+            labelValue="Логин"
+        }}
+        {{> input
+            type="text"
+            name="name"
+            classes="field__name"
+            placeholder="Имя"
+            labelValue="Имя"
+        }}
+        {{> input
+            type="text"
+            name="surname"
+            classes="field__surname"
+            placeholder="Фамилия"
+            labelValue="Фамилия"
+        }}
+        {{> input
+            type="tel"
+            name="tel"
+            classes="field__tel"
+            placeholder="Телефон"
+            labelValue="Телефон"
+        }}
+        {{> input
+            type="password"
+            name="password"
+            classes="field__password"
+            placeholder="Пароль"
+            labelValue="Пароль"
+        }}
+        {{> input
+            type="password"
+            name="password"
+            classes="field__password"
+            placeholder="Пароль (еще раз)"
+            labelValue="Пароль (еще раз)"
+            errorValue="Пароли не совпадают"
+        }}
+    </div>
+        {{> button
+            id='button__aauthorization'
+            value='Зарегистрироваться'
+        }}
+        {{> button
+            id='button_account-empty'
+            value='Войти'
+            classes="button--white"
+        }}
+</form>

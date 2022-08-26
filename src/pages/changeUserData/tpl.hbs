@@ -1,0 +1,61 @@
+<form method="post" enctype="multipart/form-data" autocomplete="off">
+    <div class="userSettings">
+        {{> avatar}}
+        <ul class="userSettings__fields">
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Почта"
+                    value="pochta@yandex.ru"
+                    type = "email"
+                    name="email"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Логин"
+                    value="ivanivanov"
+                    type = "text"
+                    name="login"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Имя"
+                    value="Иван"
+                    type = "text"
+                    name="first_name"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Фамилия"
+                    value="Иванов"
+                    type = "text"
+                    name="second_name"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Имя в чате"
+                    value="Иван"
+                    type = "text"
+                    name="name_in_chat"
+                }}
+            </li>
+            <li class="userSettings__field-text">
+                {{> fieldText
+                    key="Телефон"
+                    value="+7 (909) 967 30 30"
+                    type = "tel"
+                    name="phone"
+                }}
+            </li>
+        </ul>
+
+        {{> button
+            id="button__save"
+            value="Сохранить"
+            type="submit"
+        }}
+    </div>
+</form>
