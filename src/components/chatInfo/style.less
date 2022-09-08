@@ -1,0 +1,68 @@
+.chat-info {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .dropDown {
+        position: absolute;
+        top: 50px;
+        right: 0;
+
+        .dropDown__item--delUser {
+            margin-bottom: 0;
+        }
+
+        .dropDown__item--addPhoto,
+        .dropDown__item--addFile,
+        .dropDown__item--addLocation {
+            display: none;
+        }
+    }
+}
+
+.chat-info__person {
+    display: flex;
+    align-items: center;
+}
+
+.chat-info__person-image {
+    width: 34px;
+    height: 34px;
+    margin-right: 10px;
+
+    border-radius: 50%;
+    background-color: #efefef;
+}
+
+.chat-info__menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    margin-left: auto;
+
+    background-color: transparent;
+    border-radius: 50%;
+    transition: 0.5s;
+
+    &:hover {
+        background-color: #efefef;
+    }
+}
+
+.chat-info__menu-button {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    background-image: url('../../../static/img/iconBurger.png');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+}

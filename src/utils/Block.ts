@@ -15,21 +15,19 @@ export default class Block {
   public children: Record<string, Block>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
-  private _meta: { tagName: string; props: any; };
+  private _meta: { props: any; };
 
   /** JSDoc
-   * @param {string} tagName
    * @param {Object} props
    *
    * @returns {void}
    */
-  constructor(tagName = "div", propsWithChildren: any = {}) {
+  constructor(propsWithChildren: any = {}) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
 
     this._meta = {
-      tagName,
       props
     };
 
@@ -41,6 +39,12 @@ export default class Block {
     this._registerEvents(eventBus);
 
     eventBus.emit(Block.EVENTS.INIT);
+  }
+
+  removeChild(child) {
+    this.setProps(
+        this.children = {...Object.entries(this.children).filter((el) => el !== child)}
+    )
   }
 
   _getChildrenAndProps(childrenAndProps: any) {
@@ -140,7 +144,8 @@ export default class Block {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
-      contextAndStubs[name] = `<div data-id="${component.id}" />`;
+      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+    //   <div data-id="${component.id}"></div>
     });
 
     const html = template(contextAndStubs);

@@ -7,14 +7,17 @@ export interface AvatarProps {
     alt: string;
     text?: string;
     title?: string;
+    events?: {
+        click: () => void;
+    };
 }
 
 export class Avatar extends Block {
     constructor(props: AvatarProps) {
-        super('div', props);
+        super(props);
     }
 
-    render() {
+    public render(): DocumentFragment {
         return this.compile(template, this.props);
     }
 }

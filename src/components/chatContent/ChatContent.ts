@@ -2,12 +2,12 @@ import Block from '../../utils/Block';
 import template from './template.hbs';
 import './style.less';
 
-export interface IndexProps {
-    title: string;
+export interface ChatContentProps {
+    dummyText: string;
 }
 
-export class Index extends Block {
-    constructor(props: IndexProps) {
+export class ChatContent extends Block {
+    constructor(props: ChatContentProps) {
         super(props);
     }
 

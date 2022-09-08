@@ -2,12 +2,14 @@ import Block from '../../utils/Block';
 import template from './template.hbs';
 import './style.less';
 
-export interface IndexProps {
+export interface PopupProps {
     title: string;
+    text: string;
+    button: (...args: any) => Block;
 }
 
-export class Index extends Block {
-    constructor(props: IndexProps) {
+export class Popup extends Block {
+    constructor(props: PopupProps) {
         super(props);
     }
 

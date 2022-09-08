@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./template.hbs";
-import "./style.less";
+import Block from '../../utils/Block';
+import template from './template.hbs';
+import './style.less';
 
 export interface InputProps {
     classWrapper: string; //'input' || 'text'
@@ -15,10 +15,10 @@ export interface InputProps {
 
 export class Input extends Block {
     constructor(props: InputProps) {
-        super('div', props);
+        super(props);
     }
 
-    render() {
+    public render(): DocumentFragment {
         return this.compile(template, this.props);
     }
 }

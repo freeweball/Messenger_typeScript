@@ -7,9 +7,11 @@ import {PageRegistration} from './pages/registration/PageRegistration';
 import {PageUserSettings} from './pages/userSettings/PageUserSettings';
 import {PageChangeUserData} from './pages/changeUserData/PageChangeUserData';
 import {PageChangeUserPassword} from './pages/changeUserPassword/PageChangeUserPassword';
+import {PageChat} from './pages/chat/PageChat';
 
 //styles
 import './style/style.less';
+import { ChatList } from './components/chatList/ChatList';
 
 const configurations = {
     'index': new Index({
@@ -32,6 +34,9 @@ const configurations = {
 	'link-5': new PageUserSettings({
 		title: 'Страница настройки пользователя',
 	}),
+    'link-6': new PageChat({
+        title: 'Чат',
+    }),
 	'userSettings-1': new PageChangeUserData({}),
 	'userSettings-2': new PageChangeUserPassword({}),
 	'userSettings-3': new Page404({

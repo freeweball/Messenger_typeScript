@@ -10,22 +10,24 @@ export interface Page500Props {
 
 export class Page500 extends Block {
     constructor(props: Page500Props) {
-        super('div', props);
+        super(props);
     }
 
-    init() {
-        this.children.buttonBack = new Button({
-            id: this.id,
-            value: 'Назад к чатам',
-            type: 'button',
-            classes: 'button--white',
-            events: {
-                click: () => location.reload()
-            }
-        });
+    public init(): void {
+        this.children = {
+            buttonBack: new Button({
+                id: this.id,
+                value: 'Назад к чатам',
+                type: 'button',
+                classes: 'button--white',
+                events: {
+                    click: () => location.reload()
+                }
+            })
+        }
     }
 
-    render() {
+    public render(): DocumentFragment {
         return this.compile(template, this.props);
     }
 }

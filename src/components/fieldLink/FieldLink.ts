@@ -10,10 +10,10 @@ export interface FieldLinkProps {
 
 export class FieldLink extends Block {
     constructor(props: FieldLinkProps) {
-        super('div', props);
+        super(props);
     }
 
-    render() {
+    public render(): DocumentFragment {
         return this.compile(template, this.props);
     }
 }

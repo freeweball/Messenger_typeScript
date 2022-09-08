@@ -131,3 +131,133 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+// Стилизация кнопок
+.button-round {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+.button-arrow {
+    width: 28px;
+    height: 28px;
+
+    background-image: url('../../static/img/buttonBack.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-arrow--rotate {
+    width: 28px;
+    height: 28px;
+
+    background-image: url('../../static/img/buttonBack.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    transform: rotate(180deg);
+}
+
+.button-add {
+    width: 22px;
+    height: 22px;
+
+    background-image: url('../../static/img/buttonAdd.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-close {
+    width: 22px;
+    height: 22px;
+
+    background-image: url('../../static/img/buttonClose.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-add-file {
+    width: 32px;
+    height: 32px;
+
+    background-image: url('../../static/img/buttonAddFile.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-photo {
+    width: 22px;
+    height: 22px;
+
+    background-image: url('../../static/img/buttonPhoto.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-file {
+    width: 22px;
+    height: 22px;
+
+    background-image: url('../../static/img/buttonFile.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-location {
+    width: 22px;
+    height: 22px;
+
+    background-image: url('../../static/img/buttonLocation.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.button-go-to {
+    position: relative;
+
+    display: block;
+    width: auto;
+    padding-right: 12px;
+
+    color: #999999;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 500;
+
+    background: transparent;
+
+    &::before {
+        content: '';
+
+        position: absolute;
+        top: 50%;
+        right: 0;
+
+        width: 6px;
+        height: 10px;
+
+        background-image: url('../../static/img/buttonGoTo.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        transform: translateY(-50%);
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+

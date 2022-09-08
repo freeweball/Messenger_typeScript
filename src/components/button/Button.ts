@@ -4,7 +4,7 @@ import './style.less';
 
 export interface ButtonProps {
     id: string;
-    value: string;
+    value?: string;
     classes?: string;
     type: string;
     events?: {
@@ -14,10 +14,10 @@ export interface ButtonProps {
 
 export class Button extends Block {
     constructor(props: ButtonProps) {
-        super('div', props);
+        super(props);
     }
 
-    render() {
+    public render(): DocumentFragment {
         return this.compile(template, this.props);
     }
 }

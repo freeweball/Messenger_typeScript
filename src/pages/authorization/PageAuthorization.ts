@@ -10,10 +10,10 @@ export interface PageAuthorizationProps {
 
 export class PageAuthorization extends Block {
     constructor(props: PageAuthorizationProps) {
-        super('div', props);
+        super(props);
     }
 
-    init() {
+    public init(): void {
         this.children = {
             inputLogin: new Input({
                 classWrapper: 'input',
@@ -24,7 +24,6 @@ export class PageAuthorization extends Block {
                 labelValue: 'Логин',
                 errorValue: 'Неверный логин'
             }),
-    
             inputPassword: new Input({
                 classWrapper: 'input',
                 type: 'password',
@@ -33,43 +32,22 @@ export class PageAuthorization extends Block {
                 placeholder: 'Пароль',
                 labelValue: 'Пароль',
                 errorValue: 'Неверный пароль'
+            }),
+            buttonAuthorize: new Button({
+                id: 'button__aauthorization',
+                value: 'Авторизоваться',
+                type: 'button'
+            }),
+            buttonAccountEmpty: new Button({
+                id: 'button_account-empty',
+                value: 'Нет аккаунта?',
+                type: 'button',
+                classes: "button--white"
             })
         }
-        this.children.inputLogin = new Input({
-            classWrapper: 'input',
-            type: 'text',
-            name: 'login',
-            classes: 'field__text',
-            placeholder: 'Логин',
-            labelValue: 'Логин',
-            errorValue: 'Неверный логин'
-        });
-
-        this.children.inputPassword = new Input({
-            classWrapper: 'input',
-            type: 'password',
-            name: 'password',
-            classes: 'field__password',
-            placeholder: 'Пароль',
-            labelValue: 'Пароль',
-            errorValue: 'Неверный пароль'
-        });
-
-        this.children.buttonAuthorize = new Button({
-            id: 'button__aauthorization',
-            value: 'Авторизоваться',
-            type: 'button'
-        });
-
-        this.children.buttonAccountEmpty = new Button({
-            id: 'button_account-empty',
-            value: 'Нет аккаунта?',
-            type: 'button',
-            classes: "button--white"
-        });
     }
 
-    render() {
+    public render(): DocumentFragment {
         return this.compile(template, this.props);
     }
 }
