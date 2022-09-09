@@ -8,7 +8,7 @@ export interface ButtonProps {
     classes?: string;
     type: string;
     events?: {
-        click: () => void;
+        click: (evt: Event) => void;
     };
 }
 

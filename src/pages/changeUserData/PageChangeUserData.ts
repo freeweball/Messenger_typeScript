@@ -4,14 +4,19 @@ import './style.less';
 import {Avatar} from '../../components/avatar/Avatar';
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
+import {Util} from '../../utils/Util';
 
 export interface PageChangeUserDataProps {
 
 }
 
 export class PageChangeUserData extends Block {
+    private _util: Util;
+
     constructor(props: PageChangeUserDataProps) {
         super(props);
+
+        this._util = new Util();
     }
 
     public init(): void {
@@ -27,7 +32,6 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Почта',
                 placeholder: 'pochta@yandex.ru',
                 type: 'text',
-                disabled: 'disabled',
                 name: 'email'
             }),
             inputLogin: new Input({
@@ -35,7 +39,6 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Логин',
                 placeholder: 'ivanivanov',
                 type: 'text',
-                disabled: 'disabled',
                 name: 'login'
             }),
             inputName: new Input({
@@ -43,7 +46,6 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Имя',
                 placeholder: 'Иван',
                 type: 'text',
-                disabled: 'disabled',
                 name: 'first_name'
             }),
             inputSurname: new Input({
@@ -51,7 +53,6 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Фамилия',
                 placeholder: 'Иванов',
                 type: 'text',
-                disabled: 'disabled',
                 name: 'second_name'
             }),
             inputNikName: new Input({
@@ -59,7 +60,6 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Имя в чате',
                 placeholder: 'Иван',
                 type: 'text',
-                disabled: 'disabled',
                 name: 'name_in_chat'
             }),
             inputPhone: new Input({
@@ -67,13 +67,25 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Телефон',
                 placeholder: '+7 (909) 967 30 30',
                 type: 'tel',
-                disabled: 'disabled',
                 name: 'phone'
             }),
             buttonSave: new Button({
                 id: this.id,
                 value: 'Сохранить',
-                type: 'submit'
+                type: 'submit',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        console.log(this._util.getInputValues(
+                            this.children.inputEmail,
+                            this.children.inputLogin,
+                            this.children.inputName,
+                            this.children.inputSurname,
+                            this.children.inputNikName,
+                            this.children.inputPhone
+                        ))
+                    }
+                }
             })
         }
     }

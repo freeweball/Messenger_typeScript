@@ -3,14 +3,19 @@ import template from './template.hbs';
 import './style.less';
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
+import {Util} from '../../utils/Util';
 
 export interface PageRegistrationProps {
     title: string;
 }
 
 export class PageRegistration extends Block {
+    private _util: Util;
+
     constructor(props: PageRegistrationProps) {
         super(props);
+
+        this._util = new Util();
     }
 
     public init(): void {
@@ -34,7 +39,7 @@ export class PageRegistration extends Block {
             inputName: new Input({
                 classWrapper: 'input',
                 type: 'text',
-                name: 'name',
+                name: 'first_name',
                 classes: 'field__name',
                 placeholder: 'Имя',
                 labelValue: 'Имя'
@@ -42,15 +47,15 @@ export class PageRegistration extends Block {
             inputSurname: new Input({
                 classWrapper: 'input',
                 type: 'text',
-                name: 'surname',
+                name: 'second_name',
                 classes: 'field__surname',
                 placeholder: 'Фамилия',
                 labelValue: 'Фамилия'
             }),
-            inputTel: new Input({
+            inputPhone: new Input({
                 classWrapper: 'input',
                 type: 'tel',
-                name: 'tel',
+                name: 'phone',
                 classes: 'field__tel',
                 placeholder: 'Телефон',
                 labelValue: 'Телефон'
@@ -66,7 +71,7 @@ export class PageRegistration extends Block {
             inputPasswordRepeat: new Input({
                 classWrapper: 'input',
                 type: 'password',
-                name: 'password',
+                name: 'repeatPassword',
                 classes: 'field__password',
                 placeholder: 'Пароль (еще раз)',
                 labelValue: 'Пароль (еще раз)',
@@ -75,7 +80,21 @@ export class PageRegistration extends Block {
             buttonAuthorize: new Button({
                 id: 'button__aauthorization',
                 value: 'Авторизоваться',
-                type: 'button'
+                type: 'button',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        console.log(this._util.getInputValues(
+                            this.children.inputEmail,
+                            this.children.inputLogin,
+                            this.children.inputName,
+                            this.children.inputSurname,
+                            this.children.inputTel,
+                            this.children.inputPassword,
+                            this.children.inputPasswordRepeat
+                        ))
+                    }
+                }
             }),
             buttonAccountEmpty: new Button({
                 id: 'button_account-empty',

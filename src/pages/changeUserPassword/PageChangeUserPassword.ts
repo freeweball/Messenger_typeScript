@@ -4,14 +4,19 @@ import './style.less';
 import {Avatar} from '../../components/avatar/Avatar'
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
+import {Util} from '../../utils/Util';
 
 export interface PageChangeUserPasswordProps {
 
 }
 
 export class PageChangeUserPassword extends Block {
+    private _util: Util;
+
     constructor(props: PageChangeUserPasswordProps) {
         super(props);
+
+        this._util = new Util();
     }
 
     public init(): void {
@@ -33,14 +38,14 @@ export class PageChangeUserPassword extends Block {
             inputPasswordNew: new Input({
                 classWrapper: 'text',
                 type: 'password',
-                name: 'password',
+                name: 'newPassword',
                 placeholder: '•••••••••',
                 labelValue: 'Новый пароль',
             }),
             inputPasswordRepeat: new Input({
                 classWrapper: 'text',
                 type: 'password',
-                name: 'password',
+                name: 'repeatPassword',
                 placeholder: '•••••••••',
                 labelValue: 'Повторите новый пароль',
                 errorValue: 'Пароли не совпадают'
@@ -48,7 +53,17 @@ export class PageChangeUserPassword extends Block {
             buttonSave: new Button({
                 id: this.id,
                 value: 'Сохранить',
-                type: 'submit'
+                type: 'submit',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        console.log(this._util.getInputValues(
+                            this.children.inputPassword,
+                            this.children.inputPasswordNew,
+                            this.children.inputPasswordRepeat
+                        ))
+                    }
+                }
             })
         }
     }
