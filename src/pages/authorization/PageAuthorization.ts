@@ -48,7 +48,11 @@ export class PageAuthorization extends Block {
                         console.log(this._util.getInputValues(
                             this.children.inputLogin,
                             this.children.inputPassword
-                        ))
+                        ));
+
+                        const login = this._util.getInputValues(this.children.inputLogin);
+                        
+                        this._util.validate(login);
                     }
                 }
             }),

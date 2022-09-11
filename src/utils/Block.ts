@@ -2,34 +2,29 @@ import {EventBus} from "./EventBus";
 import {nanoid} from 'nanoid';
 
 // Нельзя создавать экземпляр данного класса
-export default class Block {
+export default class Block<P extends Record<string, any> = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render"
-  };
+  } as const;
 
   public id = nanoid(6);
-  protected props: any;
+  protected props: P;
   public children: Record<string, Block>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
-  private _meta: { props: any; };
+//   private _meta: { props: P; };
 
-  /** JSDoc
-   * @param {Object} props
-   *
-   * @returns {void}
-   */
-  constructor(propsWithChildren: any = {}) {
+  constructor(propsWithChildren: P) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
 
-    this._meta = {
-      props
-    };
+    // this._meta = {
+    //   props: props as P
+    // };
 
     this.children = children;
     this.props = this._makePropsProxy(props);
@@ -41,80 +36,74 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  removeChild(child) {
-    this.setProps(
-        this.children = {...Object.entries(this.children).filter((el) => el !== child)}
-    )
-  }
-
-  _getChildrenAndProps(childrenAndProps: any) {
-    const props: Record<string, any> = {};
+  private _getChildrenAndProps(childrenAndProps: P): {props: P, children: Record<string, Block>} {
+    const props: Record<string, unknown> = {};
     const children: Record<string, Block> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
-        children[key] = value;
+        children[key as string] = value;
       } else {
         props[key] = value;
       }
     });
 
-    return { props, children };
+    return { props: props as P, children };
   }
 
-  _addEvents() {
-    const {events = {}} = this.props as { events: Record<string, () =>void> };
+  private _addEvents(): void {
+    const {events = {}} = this.props as P & { events: Record<string, () => void> };
 
     Object.keys(events).forEach(eventName => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private _registerEvents(eventBus: EventBus): void {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
+//   private _createResources() {
     // const { tagName } = this._meta;
     // this._element = this._createDocumentElement(tagName);
-  }
+//   }
 
-  private _init() {
-    this._createResources();
+  private _init(): void {
+    // this._createResources();
 
     this.init();
 
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  protected init() {}
+  protected init(): any {}
 
-  _componentDidMount() {
+  _componentDidMount(): void {
     this.componentDidMount();
   }
 
-  componentDidMount() {}
+  componentDidMount(): any {}
 
-  public dispatchComponentDidMount() {
+  public dispatchComponentDidMount(): void {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
     Object.values(this.children).forEach(child => child.dispatchComponentDidMount());
   }
 
-  private _componentDidUpdate(oldProps: any, newProps: any) {
+  private _componentDidUpdate(oldProps: any, newProps: any): void {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any) {
+  protected componentDidUpdate(oldProps: P, newProps: P): boolean {
     return true;
   }
 
-  setProps = (nextProps: any) => {
+  public setProps = (nextProps: any): void => {
     if (!nextProps) {
       return;
     }
@@ -122,11 +111,11 @@ export default class Block {
     Object.assign(this.props, nextProps);
   };
 
-  get element() {
+  public get element(): HTMLElement | null {
     return this._element;
   }
 
-  private _render() {
+  private _render(): void {
     const fragment = this.render();
     const newElement = fragment.firstElementChild as HTMLElement;
 
@@ -140,7 +129,7 @@ export default class Block {
     this._addEvents();
   }
 
-  protected compile(template: (context: any) => string, context: any) {
+  protected compile(template: (context: any) => string, context: any): DocumentFragment {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
@@ -174,26 +163,23 @@ export default class Block {
     return new DocumentFragment();
   }
 
-  getContent() {
+  public getContent(): HTMLElement | null {
     return this.element;
   }
 
-  _makePropsProxy(props: any) {
-    // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
+  private _makePropsProxy(props: P): any {
     const self = this;
 
     return new Proxy(props, {
-      get(target, prop) {
+      get(target, prop: string) {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+
+      set(target, prop: string, value) {
         const oldTarget = { ...target }
 
-        target[prop] = value;
-
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
+        target[prop as keyof P] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
@@ -203,16 +189,16 @@ export default class Block {
     });
   }
 
-  _createDocumentElement(tagName: string) {
+  private _createDocumentElement(tagName: string) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 
-  show() {
+  public show(): void {
     this.getContent()!.style.display = "block";
   }
 
-  hide() {
+  public hide(): void {
     this.getContent()!.style.display = "none";
   }
 }
