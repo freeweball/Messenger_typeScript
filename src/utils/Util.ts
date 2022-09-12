@@ -44,7 +44,6 @@ export class Util {
             console.log(latin.test(login) + '  Проверка на латиница');
 
         const specialSymbols = new RegExp('[!"#$%&\'()*+,.:;<>=?@^_-{|]');
-            // debugger
             console.log(specialSymbols.test(login) + '  Проверка на спецсимволы');
         }
         else if (password) {

@@ -3,7 +3,7 @@ import template from './template.hbs';
 import './style.less';
 
 export interface InputProps {
-    classWrapper: string; //'input' || 'text'
+    classWrapper: 'input' | 'text';
     type: string;
     name: string;
     labelValue: string;

@@ -6,7 +6,7 @@ export interface ButtonProps {
     id: string;
     value?: string;
     classes?: string;
-    type: string;
+    type: 'button' | 'submit' | 'reset';
     events?: {
         click: (evt: Event) => void;
     };

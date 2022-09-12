@@ -1,7 +1,6 @@
 import {EventBus} from "./EventBus";
 import {nanoid} from 'nanoid';
 
-// Нельзя создавать экземпляр данного класса
 export default class Block<P extends Record<string, any> = any> {
   static EVENTS = {
     INIT: "init",
@@ -15,22 +14,14 @@ export default class Block<P extends Record<string, any> = any> {
   public children: Record<string, Block>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
-//   private _meta: { props: P; };
 
   constructor(propsWithChildren: P) {
     const eventBus = new EventBus();
-
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
-
-    // this._meta = {
-    //   props: props as P
-    // };
 
     this.children = children;
     this.props = this._makePropsProxy(props);
-
     this.eventBus = () => eventBus;
-
     this._registerEvents(eventBus);
 
     eventBus.emit(Block.EVENTS.INIT);
@@ -66,16 +57,8 @@ export default class Block<P extends Record<string, any> = any> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-//   private _createResources() {
-    // const { tagName } = this._meta;
-    // this._element = this._createDocumentElement(tagName);
-//   }
-
   private _init(): void {
-    // this._createResources();
-
     this.init();
-
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
@@ -121,11 +104,6 @@ export default class Block<P extends Record<string, any> = any> {
 
     this._element?.replaceWith(newElement);
     this._element = newElement;
-
-    // this._element!.innerHTML = '';
-
-    // this._element!.append(fragment);
-
     this._addEvents();
   }
 
@@ -134,7 +112,6 @@ export default class Block<P extends Record<string, any> = any> {
 
     Object.entries(this.children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-    //   <div data-id="${component.id}"></div>
     });
 
     const html = template(contextAndStubs);
@@ -190,7 +167,6 @@ export default class Block<P extends Record<string, any> = any> {
   }
 
   private _createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 
