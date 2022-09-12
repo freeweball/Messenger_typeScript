@@ -7,7 +7,7 @@ export interface InputProps {
     type: string;
     name: string;
     labelValue: string;
-    classes?: string;
+    classes?: Array<string>;
     placeholder?: string;
     errorValue?: string;
     disabled?: string;

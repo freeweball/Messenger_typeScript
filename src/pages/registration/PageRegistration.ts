@@ -24,7 +24,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'email',
                 name: 'email',
-                classes: 'field__email',
+                classes: ['field__email'],
                 placeholder: 'Почта',
                 labelValue: 'Почта'
             }),
@@ -32,7 +32,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'text',
                 name: 'login',
-                classes: 'field__login',
+                classes: ['field__login'],
                 placeholder: 'Логин',
                 labelValue: 'Логин'
             }),
@@ -40,7 +40,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'text',
                 name: 'first_name',
-                classes: 'field__name',
+                classes: ['field__name'],
                 placeholder: 'Имя',
                 labelValue: 'Имя'
             }),
@@ -48,7 +48,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'text',
                 name: 'second_name',
-                classes: 'field__surname',
+                classes: ['field__surname'],
                 placeholder: 'Фамилия',
                 labelValue: 'Фамилия'
             }),
@@ -56,7 +56,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'tel',
                 name: 'phone',
-                classes: 'field__tel',
+                classes: ['field__tel'],
                 placeholder: 'Телефон',
                 labelValue: 'Телефон'
             }),
@@ -64,7 +64,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'password',
                 name: 'password',
-                classes: 'field__password',
+                classes: ['field__password'],
                 placeholder: 'Пароль',
                 labelValue: 'Пароль'
             }),
@@ -72,7 +72,7 @@ export class PageRegistration extends Block {
                 classWrapper: 'input',
                 type: 'password',
                 name: 'repeatPassword',
-                classes: 'field__password',
+                classes: ['field__password'],
                 placeholder: 'Пароль (еще раз)',
                 labelValue: 'Пароль (еще раз)',
                 errorValue: 'Пароли не совпадают'
@@ -100,7 +100,7 @@ export class PageRegistration extends Block {
                 id: 'button_account-empty',
                 value: 'Нет аккаунта?',
                 type: 'button',
-                classes: 'button--white'
+                classes: ['button--white']
             })
         }
     }

@@ -15,14 +15,13 @@ export class ChatContent extends Block {
     public init(): void {
         this.children = {
             message1: new Message({
-                classes: '',
                 date: '19 июня',
                 text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
                 time: '12:00'
 
             }),
             message2: new Message({
-                classes: 'interlocutor',
+                classes: ['interlocutor'],
                 date: '20 июня',
                 text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
                 time: '15:00'

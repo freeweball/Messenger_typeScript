@@ -23,7 +23,7 @@ export class ChatInput extends Block {
             }),
             buttonAddFile: new Button({
                 id: this.id,
-                classes: 'button-add-file',
+                classes: ['button-add-file'],
                 type: 'button',
                 events: {
                     click: () => {
@@ -34,7 +34,7 @@ export class ChatInput extends Block {
             inputMessage: new Search({}),
             buttonSend: new Button({
                 id: this.id,
-                classes: 'button-arrow--rotate',
+                classes: ['button-arrow--rotate'],
                 type: 'button',
             })
         }

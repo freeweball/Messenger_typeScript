@@ -3,7 +3,7 @@ import template from './template.hbs';
 import './style.less';
 
 export interface MessageProps {
-    classes: string;
+    classes?: Array<string>;
     date?: string;
     text?: string;
     time?: string;

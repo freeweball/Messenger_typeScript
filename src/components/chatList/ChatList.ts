@@ -20,7 +20,7 @@ export class ChatList extends Block {
                 id: this.id,
                 value: 'Профиль',
                 type: 'button',
-                classes: "button-go-to"
+                classes: ['button-go-to']
             }),
             search: new Search({
                 id: this.id

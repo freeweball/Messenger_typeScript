@@ -20,27 +20,27 @@ export class DropDown extends Block {
         this.children = {
             buttonAdd: new Button({
                 id: this.id,
-                classes: 'button-add',
+                classes: ['button-add'],
                 type: 'button'
             }),
             buttonDel: new Button({
                 id: this.id,
-                classes: 'button-close',
+                classes: ['button-close'],
                 type: 'button'
             }),
             buttonPhoto: new Button({
                 id: this.id,
-                classes: 'button-photo',
+                classes: ['button-photo'],
                 type: 'button'
             }),
             buttonFile: new Button({
                 id: this.id,
-                classes: 'button-file',
+                classes: ['button-file'],
                 type: 'button'
             }),
             buttonLocation: new Button({
                 id: this.id,
-                classes: 'button-location',
+                classes: ['button-location'],
                 type: 'button'
             })
         }

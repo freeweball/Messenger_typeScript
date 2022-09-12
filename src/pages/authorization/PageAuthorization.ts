@@ -24,7 +24,7 @@ export class PageAuthorization extends Block {
                 classWrapper: 'input',
                 type: 'text',
                 name: 'login',
-                classes: 'field__text',
+                classes: ['field__text'],
                 placeholder: 'Логин',
                 labelValue: 'Логин',
                 errorValue: 'Неверный логин'
@@ -33,7 +33,7 @@ export class PageAuthorization extends Block {
                 classWrapper: 'input',
                 type: 'password',
                 name: 'password',
-                classes: 'field__password',
+                classes: ['field__password'],
                 placeholder: 'Пароль',
                 labelValue: 'Пароль',
                 errorValue: 'Неверный пароль'
@@ -60,7 +60,7 @@ export class PageAuthorization extends Block {
                 id: 'button_account-empty',
                 value: 'Нет аккаунта?',
                 type: 'button',
-                classes: "button--white"
+                classes: ['button--white']
             })
         }
     }
