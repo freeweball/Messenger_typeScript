@@ -33,7 +33,15 @@ export class PageChangeUserPassword extends Block {
                 name: 'password',
                 placeholder: '•••••••••',
                 labelValue: 'Старый пароль',
-                errorValue: 'Не верный пароль'
+                errorValue: 'Не верный пароль',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputPassword, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                    }
+                }
             }),
             inputPasswordNew: new Input({
                 classWrapper: 'text',
@@ -57,11 +65,14 @@ export class PageChangeUserPassword extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
+
                         console.log(this._util.getInputValues(
                             this.children.inputPassword,
                             this.children.inputPasswordNew,
                             this.children.inputPasswordRepeat
-                        ))
+                        ));
+
+                        this._util.toggleClassName(this.children.inputPassword, 'show');
                     }
                 }
             })

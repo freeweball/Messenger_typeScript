@@ -23,18 +23,18 @@ export class ChatInput extends Block {
             }),
             buttonAddFile: new Button({
                 id: this.id,
-                classes: 'button-add-file',
+                classes: ['button-add-file'],
                 type: 'button',
                 events: {
                     click: () => {
-                        this.setProps(this.children.dropDown.element?.classList.toggle('show'));
+                        this.children.dropDown.element?.classList.toggle('show');
                     }            
                 }
             }),
             inputMessage: new Search({}),
             buttonSend: new Button({
                 id: this.id,
-                classes: 'button-arrow--rotate',
+                classes: ['button-arrow--rotate'],
                 type: 'button',
             })
         }

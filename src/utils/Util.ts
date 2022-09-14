@@ -1,7 +1,7 @@
 import Block from "./Block";
 
 export class Util {
-    getInputValues(...args: Array<Block>) {
+    public getInputValues(...args: Array<Block>): {string: string} | {} {
         const data = {};
     
         for (const arg of args) {
@@ -15,7 +15,19 @@ export class Util {
         return data;
     }
 
-    validate(data) {
+    public toggleClassName(child: Block, className: string): void {
+        if (!this.validate(this.getInputValues(child))) {
+            child.element?.classList.add(className);
+        } else {
+            child.element?.classList.remove(className);
+        }
+    }
+
+    public removeClassName(child: Block, className: string): void {
+        child.element?.classList.remove(className);
+    }
+
+    public validate(data): boolean {
         const name = data['first_name'] || data['second_name'];
         const login = data['login'];
         const email = data['email'];
@@ -24,48 +36,49 @@ export class Util {
         const message = data['message'];
 
         if (name) {
-            const firstSymbol = new RegExp('[А-ЯA-Z]');
-            console.log(firstSymbol.test(name[0]) + '  Проверка на заглавный первый символ');
-
-            const latinСyrillic = new RegExp('[A-Za-zА-Яа-я]');
-            console.log(latinСyrillic.test(name) + '  Проверка на латиница/кирилица');
-
-            const specialSymbols = new RegExp('[!"#$%&\'()*+,.:;<>=?@^_-{|]');
-            console.log(specialSymbols.test(name) + '  Проверка на спецсимволы');
-
-            const numbers = new RegExp('[0-9]');
-            console.log(numbers.test(name) + '  Проверка на наличие цифр');
+            return [
+                /[А-ЯA-Z]/.test(name[0]),
+                name.match(/[A-Za-zА-Яа-я]/g)?.length === name.length,
+                !/\s/i.test(name),
+                !/[0-9]/.test(name),
+                !/[!@#$%^&*()"'+,.:;<>=?_{}|[\]]/.test(name)
+            ].every((value: boolean) => value === true);
         }
         else if (login) {
-            const lengthLogin = login.length >= 3 && login.length <= 20;
-            console.log(lengthLogin + '  Проверка на длину логина');
-
-            const latin = new RegExp('[A-Za-z]');
-            console.log(latin.test(login) + '  Проверка на латиница');
-
-        const specialSymbols = new RegExp('[!"#$%&\'()*+,.:;<>=?@^_-{|]');
-            // debugger
-            console.log(specialSymbols.test(login) + '  Проверка на спецсимволы');
+            return [
+                login.length >= 3 && login.length <= 20,
+                login.match(/[A-Za-z0-9]/g)?.length === login?.length,
+                login.match(/[0-9]/g)?.length !== login.length,
+                !/\s/i.test(login),
+                !/[!@#$%^&*()"'+,.:;<>=?{}|[\]]/.test(login)
+            ].every((value: boolean) => value === true);
         }
         else if (password) {
-
+            return [
+                password.length >= 8 && password.length <= 40,
+                /[A-Za-aА-Яа-я]/g.test(password),
+                /[0-9]/g.test(password),
+            ].every((value: boolean) => value === true);
         }
         else if (email) {
-
+            return [
+                email.match(/[A-Za-z0-9]/g)?.length === email?.length,
+                /^[a-zA-Z0-9._-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,6}$/.test(email)
+            ].every((value: boolean) => value === true);
         }
         else if (phone) {
-            const lengthPhone = phone.length >= 10 && phone.length <= 15;
-            console.log(lengthPhone + '  Проверка на длину номера');
-
-            const numbers = new RegExp('^\d+$');
-            console.log(numbers.test(phone.slice(1)) + '  Проверка на наличие цифр');
-
-            const firstSymbolPlus = !!(phone[0] === '+');
-            console.log(firstSymbolPlus);
+            return [
+                phone.length >= 10 && phone.length <= 15,
+                !!(phone[0] === '+' || /[0-9]/.test(phone[0])),
+                phone.match(/[0-9]/g)?.length === phone.length,
+            ].every((value: boolean) => value === true);
         }
         else if (message) {
-            const zeroSymbols = !!message;
-            console.log(zeroSymbols + '  Проверка на пустую строку')
+            return [
+                !!message
+            ].every((value: boolean) => value === true);
+        } else {
+            return false;
         }
     }
 }

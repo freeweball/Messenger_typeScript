@@ -1,129 +1,112 @@
+@import './variables.less';
+
 @font-face {
-	font-family: "Inter";
-	src: url("../../static/fonts/inter-500.ttf") format("ttf"), url("../../static/fonts/inter-500.ttf") format("ttf");
-	font-weight: 500;
-	font-style: normal;
-	font-display: swap;
+    font-family: "Inter";
+    src: url("../../static/fonts/inter-500.ttf") format("ttf"), url("../../static/fonts/inter-500.ttf") format("ttf");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-	font-family: "Inter";
-	src: url("../../static/fonts/inter-500.woff") format("woff"), url("../../static/fonts/inter-500.woff") format("woff");
-	font-weight: 500;
-	font-style: normal;
-	font-display: swap;
+    font-family: "Inter";
+    src: url("../../static/fonts/inter-500.woff") format("woff"), url("../../static/fonts/inter-500.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-	font-family: "Inter";
-	src: url("../../static/fonts/inter-500.woff2") format("woff2"), url("../../static/fonts/inter-500.woff2") format("woff2");
-	font-weight: 500;
-	font-style: normal;
-	font-display: swap;
+    font-family: "Inter";
+    src: url("../../static/fonts/inter-500.woff2") format("woff2"), url("../../static/fonts/inter-500.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-	font-family: "Inter";
-	src: url("../../static/fonts/inter-600.ttf") format("ttf"), url("../../static/fonts/inter-600.ttf") format("ttf");
-	font-weight: 600;
-	font-style: normal;
-	font-display: swap;
+    font-family: "Inter";
+    src: url("../../static/fonts/inter-600.ttf") format("ttf"), url("../../static/fonts/inter-600.ttf") format("ttf");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-	font-family: "Inter";
-	src: url("../../static/fonts/inter-600.woff") format("woff"), url("../../static/fonts/inter-600.woff") format("woff");
-	font-weight: 600;
-	font-style: normal;
-	font-display: swap;
+    font-family: "Inter";
+    src: url("../../static/fonts/inter-600.woff") format("woff"), url("../../static/fonts/inter-600.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-	font-family: "Inter";
-	src: url("../../static/fonts/inter-600.woff2") format("woff2"), url("../../static/fonts/inter-600.woff2") format("woff2");
-	font-weight: 600;
-	font-style: normal;
-	font-display: swap;
+    font-family: "Inter";
+    src: url("../../static/fonts/inter-600.woff2") format("woff2"), url("../../static/fonts/inter-600.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
 }
 
 * {
-	// outline: 1px dashed red;
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	min-width: 320px;
-	margin: 0;
-	padding: 0;
+    min-width: 320px;
+    margin: 0;
+    padding: 0;
 
-	font-family: "Inter", "Arial", sans-serif;
-	color: @color-main;
-	font-size: @font-size;
-	line-height: 0.75rem;
-	font-weight: 500;
-	font-style: normal;
+    font-family: "Inter", "Arial", sans-serif;
+    color: @color-main;
+    font-size: @font-size;
+    line-height: 0.75rem;
+    font-weight: 500;
+    font-style: normal;
 
-	background-color: #ffffff;
+    background-color: @color-white;
 }
 
 img {
-	max-width: 100%;
-	height: auto;
-}
-
-.visually-hidden:not(:focus):not(:active),
-input[type="checkbox"].visually-hidden,
-input[type="radio"].visually-hidden {
-	position: absolute;
-
-	width: 1px;
-	height: 1px;
-	margin: -1px;
-	border: 0;
-	padding: 0;
-
-	white-space: nowrap;
-
-	clip-path: inset(100%);
-	clip: rect(0 0 0 0);
-	overflow: hidden;
+    max-width: 100%;
+    height: auto;
 }
 
 .page__index {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 .page__title {
-	margin-bottom: 30px;
-	font-size: 26px;
-	text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+    text-align: center;
 }
 
 .pages__list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .pages__item {
-	padding: 5px 20px;
+    padding: 5px 20px;
 }
 
 .pages__item-link {
-	position: relative;
-	text-decoration: none;
-	color: @color-gray;
-	font-size: @font-size-md;
-	line-height: 1.5rem;
-	transition: 0.5s;
+    position: relative;
+    text-decoration: none;
+    color: @color-gray;
+    font-size: @font-size-md;
+    line-height: 1.5rem;
+    transition: 0.5s;
 
-	&:hover {
-		color: @color-main;
-	}
+    &:hover {
+        color: @color-main;
+    }
 }
 
 ul {
@@ -132,7 +115,6 @@ ul {
     padding: 0;
 }
 
-// Стилизация кнопок
 .button-round {
     width: 28px;
     height: 28px;
@@ -227,7 +209,7 @@ ul {
     width: auto;
     padding-right: 12px;
 
-    color: #999999;
+    color: @color-dark-gray;
     font-size: 12px;
     line-height: 12px;
     font-weight: 500;

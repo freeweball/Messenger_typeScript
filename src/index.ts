@@ -1,4 +1,3 @@
-//pages
 import {Index} from './pages/index/PageIndex';
 import {Page404} from './pages/404/Page404';
 import {Page500} from './pages/500/Page500';
@@ -9,9 +8,7 @@ import {PageChangeUserData} from './pages/changeUserData/PageChangeUserData';
 import {PageChangeUserPassword} from './pages/changeUserPassword/PageChangeUserPassword';
 import {PageChat} from './pages/chat/PageChat';
 
-//styles
 import './style/style.less';
-import { ChatList } from './components/chatList/ChatList';
 
 const configurations = {
     'index': new Index({
@@ -49,7 +46,6 @@ const configurations = {
 const renderApp = (key) => {
 	const app = document.getElementById('app');
     const page = configurations[key].getContent();
-    // const page = configurations[key];
 
 	document.getElementById('app').innerHTML = '';
 	app.appendChild(page);

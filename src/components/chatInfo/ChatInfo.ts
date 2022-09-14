@@ -23,11 +23,11 @@ export class ChatInfo extends Block {
             }),
             buttonInfo: new Button({
                 id: this.id,
-                classes: 'chat-info__menu-button',
+                classes: ['chat-info__menu-button'],
                 type: 'button',
                 events: {
                     click: () => {
-                        this.setProps(this.children.dropDown.element?.classList.toggle('show'));
+                        this.children.dropDown.element?.classList.toggle('show');
                     }
                 }
             })

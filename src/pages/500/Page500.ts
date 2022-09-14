@@ -19,7 +19,7 @@ export class Page500 extends Block {
                 id: this.id,
                 value: 'Назад к чатам',
                 type: 'button',
-                classes: 'button--white',
+                classes: ['button--white'],
                 events: {
                     click: () => location.reload()
                 }

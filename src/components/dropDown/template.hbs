@@ -11,14 +11,23 @@
         <li class="dropDown__item dropDown__item--addPhoto">
             {{{ buttonPhoto }}}
             <div class="dropDown__item-text">{{ photo }}</div>
+            <div class="dropDown__file">
+                <input type="file" name="file">
+            </div>
         </li>
         <li class="dropDown__item dropDown__item--addFile">
             {{{ buttonFile }}}
             <div class="dropDown__item-text">{{ file }}</div>
+            <div class="dropDown__file">
+                <input type="file" name="file">
+            </div>
         </li>
         <li class="dropDown__item dropDown__item--addLocation">
             {{{ buttonLocation }}}
             <div class="dropDown__item-text">{{ location }}</div>
+            <div for="file" class="dropDown__file">
+                <input type="file" name="file">
+            </div>
         </li>
     </ul>
 </div>

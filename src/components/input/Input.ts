@@ -3,14 +3,19 @@ import template from './template.hbs';
 import './style.less';
 
 export interface InputProps {
-    classWrapper: string; //'input' || 'text'
+    classWrapper: 'input' | 'text';
     type: string;
     name: string;
     labelValue: string;
-    classes?: string;
+    classes?: Array<string>;
     placeholder?: string;
     errorValue?: string;
-    disabled?: string;
+    disabled?: boolean;
+    validate?: boolean;
+    events?: {
+        focusin?: () => void;
+        focusout?: () => void;
+    }
 }
 
 export class Input extends Block {

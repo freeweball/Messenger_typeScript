@@ -20,7 +20,7 @@ export class ChatList extends Block {
                 id: this.id,
                 value: 'Профиль',
                 type: 'button',
-                classes: "button-go-to"
+                classes: ['button-go-to']
             }),
             search: new Search({
                 id: this.id
@@ -31,7 +31,7 @@ export class ChatList extends Block {
                 dialogTitle: 'Киноклуб',
                 dialogSubText: 'Вы:',
                 dialogText: 'Стиккер',
-                infoTime: '12:00',
+                infoTime: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',}),
                 infoCountIcon: 4
             })
         }

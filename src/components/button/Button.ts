@@ -5,8 +5,8 @@ import './style.less';
 export interface ButtonProps {
     id: string;
     value?: string;
-    classes?: string;
-    type: string;
+    classes?: Array<string>;
+    type: 'button' | 'submit' | 'reset';
     events?: {
         click: (evt: Event) => void;
     };
