@@ -43,7 +43,7 @@ export class PageUserSettings extends Block {
                 labelValue: 'Почта',
                 placeholder: 'pochta@yandex.ru',
                 type: 'text',
-                disabled: 'disabled',
+                disabled: true,
                 name: 'email'
             }),
             inputLogin: new Input({
@@ -51,7 +51,7 @@ export class PageUserSettings extends Block {
                 labelValue: 'Логин',
                 placeholder: 'ivanivanov',
                 type: 'text',
-                disabled: 'disabled',
+                disabled: true,
                 name: 'login'
             }),
             inputName: new Input({
@@ -59,7 +59,7 @@ export class PageUserSettings extends Block {
                 labelValue: 'Имя',
                 placeholder: 'Иван',
                 type: 'text',
-                disabled: 'disabled',
+                disabled: true,
                 name: 'first_name'
             }),
             inputSurname: new Input({
@@ -67,7 +67,7 @@ export class PageUserSettings extends Block {
                 labelValue: 'Фамилия',
                 placeholder: 'Иванов',
                 type: 'text',
-                disabled: 'disabled',
+                disabled: true,
                 name: 'second_name'
             }),
             inputNikName: new Input({
@@ -75,7 +75,7 @@ export class PageUserSettings extends Block {
                 labelValue: 'Имя в чате',
                 placeholder: 'Иван',
                 type: 'text',
-                disabled: 'disabled',
+                disabled: true,
                 name: 'name_in_chat'
             }),
             inputPhone: new Input({
@@ -83,7 +83,7 @@ export class PageUserSettings extends Block {
                 labelValue: 'Телефон',
                 placeholder: '+7 (909) 967 30 30',
                 type: 'tel',
-                disabled: 'disabled',
+                disabled: true,
                 name: 'phone'
             }),
             linkData: new FieldLink({

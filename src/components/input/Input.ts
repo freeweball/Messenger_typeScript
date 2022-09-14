@@ -10,7 +10,12 @@ export interface InputProps {
     classes?: Array<string>;
     placeholder?: string;
     errorValue?: string;
-    disabled?: string;
+    disabled?: boolean;
+    validate?: boolean;
+    events?: {
+        focusin?: () => void;
+        focusout?: () => void;
+    }
 }
 
 export class Input extends Block {

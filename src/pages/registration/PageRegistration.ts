@@ -26,7 +26,16 @@ export class PageRegistration extends Block {
                 name: 'email',
                 classes: ['field__email'],
                 placeholder: 'Почта',
-                labelValue: 'Почта'
+                labelValue: 'Почта',
+                errorValue: 'Не верная почта',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputEmail, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputEmail, 'show');
+                    }
+                }
             }),
             inputLogin: new Input({
                 classWrapper: 'input',
@@ -34,7 +43,16 @@ export class PageRegistration extends Block {
                 name: 'login',
                 classes: ['field__login'],
                 placeholder: 'Логин',
-                labelValue: 'Логин'
+                labelValue: 'Логин',
+                errorValue: 'Не верный логин',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputLogin, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                    }
+                }
             }),
             inputName: new Input({
                 classWrapper: 'input',
@@ -42,7 +60,16 @@ export class PageRegistration extends Block {
                 name: 'first_name',
                 classes: ['field__name'],
                 placeholder: 'Имя',
-                labelValue: 'Имя'
+                labelValue: 'Имя',
+                errorValue: 'Не верное имя',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputName, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputName, 'show');
+                    }
+                }
             }),
             inputSurname: new Input({
                 classWrapper: 'input',
@@ -50,7 +77,16 @@ export class PageRegistration extends Block {
                 name: 'second_name',
                 classes: ['field__surname'],
                 placeholder: 'Фамилия',
-                labelValue: 'Фамилия'
+                labelValue: 'Фамилия',
+                errorValue: 'Не верная фамилия',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputSurname, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputSurname, 'show');
+                    }
+                }
             }),
             inputPhone: new Input({
                 classWrapper: 'input',
@@ -58,7 +94,16 @@ export class PageRegistration extends Block {
                 name: 'phone',
                 classes: ['field__tel'],
                 placeholder: 'Телефон',
-                labelValue: 'Телефон'
+                labelValue: 'Телефон',
+                errorValue: 'Не верный телефон',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputPhone, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputPhone, 'show');
+                    }
+                }
             }),
             inputPassword: new Input({
                 classWrapper: 'input',
@@ -66,7 +111,16 @@ export class PageRegistration extends Block {
                 name: 'password',
                 classes: ['field__password'],
                 placeholder: 'Пароль',
-                labelValue: 'Пароль'
+                labelValue: 'Пароль',
+                errorValue: 'Не верный пароль',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputPassword, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                    }
+                }
             }),
             inputPasswordRepeat: new Input({
                 classWrapper: 'input',
@@ -84,15 +138,23 @@ export class PageRegistration extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
+
                         console.log(this._util.getInputValues(
-                            this.children.inputEmail,
-                            this.children.inputLogin,
                             this.children.inputName,
                             this.children.inputSurname,
-                            this.children.inputTel,
+                            this.children.inputLogin,
                             this.children.inputPassword,
+                            this.children.inputEmail,
+                            this.children.inputPhone,
                             this.children.inputPasswordRepeat
-                        ))
+                        ));
+
+                        this._util.toggleClassName(this.children.inputName, 'show');
+                        this._util.toggleClassName(this.children.inputSurname, 'show');
+                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        this._util.toggleClassName(this.children.inputEmail, 'show');
+                        this._util.toggleClassName(this.children.inputPhone, 'show');
                     }
                 }
             }),

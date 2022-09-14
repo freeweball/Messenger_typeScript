@@ -32,28 +32,64 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Почта',
                 placeholder: 'pochta@yandex.ru',
                 type: 'text',
-                name: 'email'
+                name: 'email',
+                errorValue: 'Не верная почта',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputEmail, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputEmail, 'show');
+                    }
+                }
             }),
             inputLogin: new Input({
                 classWrapper: 'text',
                 labelValue: 'Логин',
                 placeholder: 'ivanivanov',
                 type: 'text',
-                name: 'login'
+                name: 'login',
+                errorValue: 'Не верный логин',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputLogin, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                    }
+                }
             }),
             inputName: new Input({
                 classWrapper: 'text',
                 labelValue: 'Имя',
                 placeholder: 'Иван',
                 type: 'text',
-                name: 'first_name'
+                name: 'first_name',
+                errorValue: 'Не верное имя',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputName, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputName, 'show');
+                    }
+                }
             }),
             inputSurname: new Input({
                 classWrapper: 'text',
                 labelValue: 'Фамилия',
                 placeholder: 'Иванов',
                 type: 'text',
-                name: 'second_name'
+                name: 'second_name',
+                errorValue: 'Не верная фамилия',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputSurname, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputSurname, 'show');
+                    }
+                }
             }),
             inputNikName: new Input({
                 classWrapper: 'text',
@@ -67,7 +103,16 @@ export class PageChangeUserData extends Block {
                 labelValue: 'Телефон',
                 placeholder: '+7 (909) 967 30 30',
                 type: 'tel',
-                name: 'phone'
+                name: 'phone',
+                errorValue: 'Не верный телефон',
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputPhone, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputPhone, 'show');
+                    }
+                }
             }),
             buttonSave: new Button({
                 id: this.id,
@@ -76,6 +121,7 @@ export class PageChangeUserData extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
+
                         console.log(this._util.getInputValues(
                             this.children.inputEmail,
                             this.children.inputLogin,
@@ -83,7 +129,13 @@ export class PageChangeUserData extends Block {
                             this.children.inputSurname,
                             this.children.inputNikName,
                             this.children.inputPhone
-                        ))
+                        ));
+
+                        this._util.toggleClassName(this.children.inputEmail, 'show');
+                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                        this._util.toggleClassName(this.children.inputName, 'show');
+                        this._util.toggleClassName(this.children.inputSurname, 'show');
+                        this._util.toggleClassName(this.children.inputPhone, 'show');
                     }
                 }
             })

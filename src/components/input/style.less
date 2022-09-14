@@ -39,19 +39,26 @@
         position: absolute;
         top: 30px;
         left: 0;
+        display: none;
 
         color: @color-red;
         font-size: 8px;
         line-height: 8px;
         font-weight: 500;
         letter-spacing: 0.5px;
+    }
 
-        opacity: 0;
+    &.show {
+        .input__error {
+            display: block;
+        }
     }
 }
 
 .text {
     .input__wrapper {
+        position: relative;
+
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid @color-gray;
@@ -86,7 +93,24 @@
     }
 
     .input__error {
+        position: absolute;
+        top: 50%;
+        left: 30%;
         display: none;
+
+        transform: translateY(-50%);
+
+        color: @color-red;
+        font-size: 8px;
+        line-height: 8px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    &.show {
+        .input__error {
+            display: block;
+        }
     }
 }
 

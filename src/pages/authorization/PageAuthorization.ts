@@ -27,7 +27,16 @@ export class PageAuthorization extends Block {
                 classes: ['field__text'],
                 placeholder: 'Логин',
                 labelValue: 'Логин',
-                errorValue: 'Неверный логин'
+                errorValue: 'Неверный логин',
+                validate: true,
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputLogin, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                    }
+                }
             }),
             inputPassword: new Input({
                 classWrapper: 'input',
@@ -36,23 +45,32 @@ export class PageAuthorization extends Block {
                 classes: ['field__password'],
                 placeholder: 'Пароль',
                 labelValue: 'Пароль',
-                errorValue: 'Неверный пароль'
+                errorValue: 'Неверный пароль',
+                validate: true,
+                events: {
+                    focusin: () => {
+                        this._util.removeClassName(this.children.inputPassword, 'show');
+                    },
+                    focusout: () => {
+                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                    }
+                }
             }),
             buttonAuthorize: new Button({
                 id: 'button__aauthorization',
                 value: 'Авторизоваться',
                 type: 'button',
                 events: {
-                    click: (evt: Event) => {
+                    click: (evt: Event): void => {
                         evt.preventDefault();
+                        
                         console.log(this._util.getInputValues(
                             this.children.inputLogin,
                             this.children.inputPassword
                         ));
 
-                        const login = this._util.getInputValues(this.children.inputLogin);
-                        
-                        this._util.validate(login);
+                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                        this._util.toggleClassName(this.children.inputPassword, 'show');                     
                     }
                 }
             }),

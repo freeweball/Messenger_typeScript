@@ -27,7 +27,7 @@ export class ChatInput extends Block {
                 type: 'button',
                 events: {
                     click: () => {
-                        this.setProps(this.children.dropDown.element?.classList.toggle('show'));
+                        this.children.dropDown.element?.classList.toggle('show');
                     }            
                 }
             }),
