@@ -1,6 +1,35 @@
-.pageAuthorization {
+@import "../../style/variables.less";
+
+.page-authorization {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+}
+
+.form-authorization__wrapper {
+    width: 340px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 50px;
+    padding-bottom: 10px;
+
+    background: @color-white;
+    box-shadow: @shadow-black;
+    border-radius: 12px;
+}
+
+.form-authorization__title {
+    margin: 0;
+    margin-bottom: 55px;
+
+    color: @color-black;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-authorization__fields {
+    margin-bottom: 110px;
 }

@@ -1,0 +1,14 @@
+{
+    "stylelint.enable": true,
+    "rules": {
+      "color-hex-case": "lower",
+      "indentation": 4,
+      "no-duplicate-selectors": true,
+      "no-eol-whitespace": true,
+      "no-extra-semicolons": true
+    },
+    "ignoreFiles": [
+      "dist/*"
+    ],
+    "stylelint.validate": ["css", "less"]
+}
