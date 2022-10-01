@@ -11,7 +11,7 @@ export default class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(6);
   protected props: P;
-  public children: Record<string, Block> | Record<string, Array<Block>>;
+  public children: Record<string, Block> | any
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
 

@@ -25,7 +25,7 @@ export class ChatList extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/userSettings');
+                        router.go('/settings');
                     }
                 }
             }),

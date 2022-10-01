@@ -14,9 +14,9 @@ enum Routes {
     Page404 = '/404',
     Page500 = '/500',
     PageAuthorization = '/',
-    PageRegistration = '/registration',
-    PageUserSettings = '/userSettings',
-    PageChat = '/chat',
+    PageRegistration = '/sign-up',
+    PageUserSettings = '/settings',
+    PageChat = '/messenger',
     PageChangeUserData = '/changeUserData',
     PageChangeUserPassword = '/changeUserPassword'
 }

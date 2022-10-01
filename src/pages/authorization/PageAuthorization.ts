@@ -73,7 +73,7 @@ export class PageAuthorization extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/registration');
+                        router.go('/sign-up');
                     }
                 }
             })
