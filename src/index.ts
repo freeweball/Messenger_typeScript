@@ -13,7 +13,7 @@ import Router from './utils/Router';
 enum Routes {
     Page404 = '/404',
     Page500 = '/500',
-    PageAuthorization = '/authorization',
+    PageAuthorization = '/',
     PageRegistration = '/registration',
     PageUserSettings = '/userSettings',
     PageChat = '/chat',

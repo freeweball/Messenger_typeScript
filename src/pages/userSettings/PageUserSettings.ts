@@ -108,7 +108,7 @@ export class PageUserSettings extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/authorization');
+                        router.go('/');
                     }
                 }
             }),
