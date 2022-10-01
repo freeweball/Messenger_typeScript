@@ -6,7 +6,7 @@ export interface ChatProps {
     chatImage?: string;
     chatAlt?: string;
     dialogTitle: string;
-    dialogSubText: string;
+    dialogSubText?: string;
     dialogText: string;
     infoTime: string;
     infoCountIcon: number;

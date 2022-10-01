@@ -4,7 +4,8 @@
         <li class="chat-list__search-wrapper">{{{ search }}}</li>
     </ul>
     <ul class="chat__items">
-        <li>{{{ chat }}}</li>
-        <li></li>
+        {{#each childrens}}
+            <li>{{{ this }}}</li>
+        {{/each}}
     </ul>
 </div>

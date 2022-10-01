@@ -13,20 +13,26 @@ export class ChatContent extends Block {
     }
 
     public init(): void {
-        this.children = {
-            message1: new Message({
+        this.children.childrens = [
+            new Message({
                 date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
                 text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
                 time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
 
             }),
-            message2: new Message({
+            new Message({
                 classes: ['interlocutor'],
                 date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
                 text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
                 time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
             }),
-        }
+            new Message({
+                date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
+                text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
+                time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
+
+            }),
+        ]
     }
 
     public render(): DocumentFragment {

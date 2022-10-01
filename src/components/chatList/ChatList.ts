@@ -32,15 +32,25 @@ export class ChatList extends Block {
             search: new Search({
                 id: this.id
             }),
-            chat: new Chat({
-                chatImage: '',
-                chatAlt: '',
-                dialogTitle: 'Киноклуб',
-                dialogSubText: 'Вы:',
-                dialogText: 'Стиккер',
-                infoTime: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',}),
-                infoCountIcon: 4
-            })
+            childrens: [
+                new Chat({
+                    chatImage: '',
+                    chatAlt: '',
+                    dialogTitle: 'Киноклуб',
+                    dialogSubText: 'Вы:',
+                    dialogText: 'Стиккер',
+                    infoTime: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',}),
+                    infoCountIcon: 4
+                }),
+                new Chat({
+                    chatImage: '',
+                    chatAlt: '',
+                    dialogTitle: 'Флудилка',
+                    dialogText: 'Стиккер',
+                    infoTime: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',}),
+                    infoCountIcon: 4
+                })
+            ]
         }
     }
 

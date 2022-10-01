@@ -5,7 +5,9 @@
     <div class="chat__dialog">
         <h3 class="chat__dialog-title">{{ dialogTitle }}</h3>
         <div class="chat__dialog-description">
-            <span class="chat__dialog-subText">{{ dialogSubText }}</span>
+            {{#if dialogSubText}}
+                <span class="chat__dialog-subText">{{ dialogSubText }}</span>
+            {{/if}}
             <p class="chat__dialog-text">{{ dialogText }}</p>
         </div>
     </div>
