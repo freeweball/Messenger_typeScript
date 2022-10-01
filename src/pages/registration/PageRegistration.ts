@@ -1,24 +1,15 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
-
-export interface PageRegistrationProps {
-    title: string;
-}
+import router from '../../utils/Router';
 
 export class PageRegistration extends Block {
-    private _util: Util;
-
-    constructor(props: PageRegistrationProps) {
-        super(props);
-
-        this._util = new Util();
-    }
-
     public init(): void {
+        const util = new Util();
+        
         this.children = {
             inputEmail: new Input({
                 classWrapper: 'input',
@@ -30,10 +21,10 @@ export class PageRegistration extends Block {
                 errorValue: 'Не верная почта',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputEmail, 'show');
+                        util.removeClassName(this.children.inputEmail, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputEmail, 'show');
+                        util.toggleClassName(this.children.inputEmail, 'show');
                     }
                 }
             }),
@@ -47,10 +38,10 @@ export class PageRegistration extends Block {
                 errorValue: 'Не верный логин',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputLogin, 'show');
+                        util.removeClassName(this.children.inputLogin, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                        util.toggleClassName(this.children.inputLogin, 'show');
                     }
                 }
             }),
@@ -64,10 +55,10 @@ export class PageRegistration extends Block {
                 errorValue: 'Не верное имя',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputName, 'show');
+                        util.removeClassName(this.children.inputName, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputName, 'show');
+                        util.toggleClassName(this.children.inputName, 'show');
                     }
                 }
             }),
@@ -81,10 +72,10 @@ export class PageRegistration extends Block {
                 errorValue: 'Не верная фамилия',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputSurname, 'show');
+                        util.removeClassName(this.children.inputSurname, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputSurname, 'show');
+                        util.toggleClassName(this.children.inputSurname, 'show');
                     }
                 }
             }),
@@ -98,10 +89,10 @@ export class PageRegistration extends Block {
                 errorValue: 'Не верный телефон',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputPhone, 'show');
+                        util.removeClassName(this.children.inputPhone, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputPhone, 'show');
+                        util.toggleClassName(this.children.inputPhone, 'show');
                     }
                 }
             }),
@@ -115,10 +106,10 @@ export class PageRegistration extends Block {
                 errorValue: 'Не верный пароль',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputPassword, 'show');
+                        util.removeClassName(this.children.inputPassword, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');
                     }
                 }
             }),
@@ -133,13 +124,13 @@ export class PageRegistration extends Block {
             }),
             buttonAuthorize: new Button({
                 id: 'button__aauthorization',
-                value: 'Авторизоваться',
+                value: 'Зарегистрироваться',
                 type: 'button',
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
 
-                        console.log(this._util.getInputValues(
+                        console.log(util.getInputValues(
                             this.children.inputName,
                             this.children.inputSurname,
                             this.children.inputLogin,
@@ -149,20 +140,26 @@ export class PageRegistration extends Block {
                             this.children.inputPasswordRepeat
                         ));
 
-                        this._util.toggleClassName(this.children.inputName, 'show');
-                        this._util.toggleClassName(this.children.inputSurname, 'show');
-                        this._util.toggleClassName(this.children.inputLogin, 'show');
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
-                        this._util.toggleClassName(this.children.inputEmail, 'show');
-                        this._util.toggleClassName(this.children.inputPhone, 'show');
+                        util.toggleClassName(this.children.inputName, 'show');
+                        util.toggleClassName(this.children.inputSurname, 'show');
+                        util.toggleClassName(this.children.inputLogin, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');
+                        util.toggleClassName(this.children.inputEmail, 'show');
+                        util.toggleClassName(this.children.inputPhone, 'show');
                     }
                 }
             }),
             buttonAccountEmpty: new Button({
                 id: 'button_account-empty',
-                value: 'Нет аккаунта?',
+                value: 'Войти',
                 type: 'button',
-                classes: ['button--white']
+                classes: ['button--white'],
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        router.go('/authorization');
+                    }
+                }
             })
         }
     }
