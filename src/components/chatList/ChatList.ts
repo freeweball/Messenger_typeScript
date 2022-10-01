@@ -1,9 +1,10 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Button} from '../button/Button';
 import {Search} from '../search/Search';
 import {Chat} from '../chat/chat';
+import router from '../../utils/Router';
 
 export interface ChatListProps {
 
@@ -20,7 +21,13 @@ export class ChatList extends Block {
                 id: this.id,
                 value: 'Профиль',
                 type: 'button',
-                classes: ['button-go-to']
+                classes: ['button-go-to'],
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        router.go('/userSettings');
+                    }
+                }
             }),
             search: new Search({
                 id: this.id

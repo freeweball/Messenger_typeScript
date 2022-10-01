@@ -1,6 +1,6 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 
 export interface InputProps {
     classWrapper: 'input' | 'text';

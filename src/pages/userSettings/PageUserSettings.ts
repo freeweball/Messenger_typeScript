@@ -1,21 +1,14 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Avatar} from '../../components/avatar/Avatar';
 import {Input} from '../../components/input/Input';
 import {FieldLink} from '../../components/fieldLink/FieldLink';
 import {Popup} from '../../components/popup/Popup';
 import {Button} from '../../components/button/Button';
-
-export interface PageUserSettingsProps {
-    title: string;
-}
+import router from '../../utils/Router';
 
 export class PageUserSettings extends Block {
-    constructor(props: PageUserSettingsProps) {
-        super(props);
-    }
-
     public init(): void {
         this.children = {
             avatar: new Avatar({
@@ -31,7 +24,7 @@ export class PageUserSettings extends Block {
                             button: () => new Button({
                                 id: this.id,
                                 value: 'Поменять',
-                                type: ' button'
+                                type: 'button'
                             })
                         });
                         this.eventBus().emit(Block.EVENTS.FLOW_CDU);
@@ -89,17 +82,35 @@ export class PageUserSettings extends Block {
             linkData: new FieldLink({
                 link: '#',
                 text: 'Изменить данные',
-                classModif: 'userSettings-1'
+                classModif: 'userSettings-1',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        router.go('/changeUserData');
+                    }
+                }
             }),
             linkPassword: new FieldLink({
                 link: '#',
                 text: 'Изменить пароль',
-                classModif: 'userSettings-2'
+                classModif: 'userSettings-2',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        router.go('/changeUserPassword');
+                    }
+                }
             }),
             linkExit: new FieldLink({
                 link: '#',
                 text: 'Выйти',
-                classModif: 'index fieldLink--red'
+                classModif: 'index fieldLink--red',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        router.go('/authorization');
+                    }
+                }
             }),
         }
     }

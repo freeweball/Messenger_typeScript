@@ -1,25 +1,15 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Avatar} from '../../components/avatar/Avatar'
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
 
-export interface PageChangeUserPasswordProps {
-
-}
-
 export class PageChangeUserPassword extends Block {
-    private _util: Util;
-
-    constructor(props: PageChangeUserPasswordProps) {
-        super(props);
-
-        this._util = new Util();
-    }
-
     public init(): void {
+        const util = new Util();
+
         this.children = {
             avatar: new Avatar({
                 url: 'img/avatar.png',
@@ -36,10 +26,10 @@ export class PageChangeUserPassword extends Block {
                 errorValue: 'Не верный пароль',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputPassword, 'show');
+                        util.removeClassName(this.children.inputPassword, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');
                     }
                 }
             }),
@@ -66,13 +56,13 @@ export class PageChangeUserPassword extends Block {
                     click: (evt: Event): void => {
                         evt.preventDefault();
 
-                        console.log(this._util.getInputValues(
+                        console.log(util.getInputValues(
                             this.children.inputPassword,
                             this.children.inputPasswordNew,
                             this.children.inputPasswordRepeat
                         ));
 
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');
                     }
                 }
             })

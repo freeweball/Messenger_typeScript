@@ -1,11 +1,14 @@
+import "./style.less";
 import Block from "../../utils/Block";
 import template from "./template.hbs";
-import "./style.less";
 
 export interface FieldLinkProps {
     link: string;
     classModif?: string;
     text: string;
+    events?: {
+        click: (evt: Event) => void;
+    };
 }
 
 export class FieldLink extends Block {
