@@ -1,9 +1,16 @@
 <div class="chat-content">
+    <p>ID юзеров в чате</p>
+    <ul class="chat-content__users">
+        {{#each users}}
+            <li class="user">{{{ this }}}</li>
+        {{/each}}
+    </ul>
     <div class="chat-content__dummy">
         <p>{{ dummyText }}</p>
     </div>
     <ul class="chat-content__message-list">
-        <li class="chat-content__message-item">{{{ message1 }}}</li>
-        <li class="chat-content__message-item">{{{ message2 }}}</li>
+        {{#each childrens}}
+            <li>{{{ this }}}</li>
+        {{/each}}
     </ul>
 </div>

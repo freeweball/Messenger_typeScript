@@ -2,10 +2,13 @@ import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
 import {Button} from '../button/Button';
+import store from '../../utils/Store';
+import ChatsController from '../../controllers/ChatsController';
 
 export interface DropdownProps {
     addUser?: string;
     delUser?: string;
+    showUsers?: string;
     photo?: string;
     file?: string;
     location?: string;
@@ -27,6 +30,18 @@ export class DropDown extends Block {
                 id: this.id,
                 classes: ['button-close'],
                 type: 'button'
+            }),
+            buttonShow: new Button({
+                id: this.id,
+                classes: ['button-close'],
+                type: 'button',
+                events: {
+                    click: () => {
+                        ChatsController.getChats();
+                        const chats = store.getState().chats;
+                        console.log(chats)
+                    }
+                }
             }),
             buttonPhoto: new Button({
                 id: this.id,

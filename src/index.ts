@@ -6,6 +6,7 @@ import {PageUserSettings} from './pages/userSettings/PageUserSettings';
 import {PageChangeUserData} from './pages/changeUserData/PageChangeUserData';
 import {PageChangeUserPassword} from './pages/changeUserPassword/PageChangeUserPassword';
 import {PageChat} from './pages/chat/PageChat';
+import AuthController from './controllers/AuthController';
 
 import './style/style.less';
 import Router from './utils/Router';
@@ -14,9 +15,9 @@ enum Routes {
     Page404 = '/404',
     Page500 = '/500',
     PageAuthorization = '/',
-    PageRegistration = '/registration',
-    PageUserSettings = '/userSettings',
-    PageChat = '/chat',
+    PageRegistration = '/sign-up',
+    PageUserSettings = '/settings',
+    PageChat = '/messenger',
     PageChangeUserData = '/changeUserData',
     PageChangeUserPassword = '/changeUserPassword'
 }
@@ -35,10 +36,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         let isProtectedRoute = true;
 
         switch (window.location.pathname) {
-          case Routes.PageAuthorization:
-          case Routes.Register:
-            isProtectedRoute = false;
-            break;
+            case Routes.Page404:
+            case Routes.Page500:
+            case Routes.PageUserSettings:
+            case Routes.PageChat:
+            case Routes.PageChangeUserData:
+            case Routes.PageChangeUserPassword:
+            case Routes.PageAuthorization:
+            case Routes.PageRegistration:
+                isProtectedRoute = false;
+                break;
         }
       
         try {
@@ -47,13 +54,13 @@ window.addEventListener('DOMContentLoaded', async () => {
           Router.start();
       
           if (!isProtectedRoute) {
-            Router.go(Routes.Profile)
+            Router.go(Routes.PageUserSettings)
           }
         } catch (e) {
           Router.start();
       
-        //   if (isProtectedRoute) {
-        //     Router.go(Routes.PageAuthorization);
-        //   }
+          if (isProtectedRoute) {
+            Router.go(Routes.PageAuthorization);
+          }
         }
 });

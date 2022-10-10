@@ -1,7 +1,10 @@
 import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import {Message} from '../message/Message';
+import {Message, MessageType} from '../message/Message';
+import store, {StoreEvents} from '../../utils/Store';
+import {Button} from '../button/Button';
+import ChatsController from '../../controllers/ChatsController';
 
 export interface ChatContentProps {
     dummyText: string;
@@ -13,20 +16,31 @@ export class ChatContent extends Block {
     }
 
     public init(): void {
-        this.children = {
-            message1: new Message({
-                date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
-                text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
-                time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
+        store.on(StoreEvents.Updated, () => {
+            this.children.users = store.getState()?.users?.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
+            this.setProps({users: store.getState().users} || {});
+        });
 
-            }),
-            message2: new Message({
-                classes: ['interlocutor'],
-                date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
-                text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
-                time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
-            }),
-        }
+        this.children.childrens = [];
+        this.children.users = [];
+    }
+
+    private _addMessage(state): void {
+        const childrens = [];
+
+        childrens.push(this._createMessage(state));
+        this.children.childrens = childrens;
+        
+        this.setProps(this.children.childrens);
+    }
+
+    private _createMessage(data: MessageType) {
+        return new Message({
+            classes: data.classes,
+            date: data.date,
+            content: data.content,
+            time: data.time
+        })
     }
 
     public render(): DocumentFragment {

@@ -5,8 +5,13 @@ import {ChatList} from "../../components/chatList/ChatList";
 import {ChatInfo} from "../../components/chatInfo/ChatInfo";
 import {ChatContent} from "../../components/chatContent/ChatContent";
 import {ChatInput} from "../../components/chatInput/ChatInput";
+import {withStore} from '../../utils/Store';
 
-export class PageChat extends Block {
+class ChatPage extends Block {
+    constructor(props) {
+        super(props);
+    }
+
     public init(): void {
         this.children = {
             chatList: new ChatList({}),
@@ -24,3 +29,7 @@ export class PageChat extends Block {
         return this.compile(template, this.props);
     }
 }
+
+const withPageChat = withStore ((state) => ({...state.chats}))
+
+export const PageChat = withPageChat(ChatPage);

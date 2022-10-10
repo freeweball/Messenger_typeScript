@@ -5,6 +5,8 @@ import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
 import router from '../../utils/Router';
+import AuthController from '../../controllers/AuthController';
+import {SignupType} from '../../api/AuthAPI';
 
 export class PageAuthorization extends Block {
     public init(): void {
@@ -54,11 +56,14 @@ export class PageAuthorization extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        
-                        console.log(util.getInputValues(
+
+                        const data = util.getInputValues(
                             this.children.inputLogin,
                             this.children.inputPassword
-                        ));
+                        );
+
+                        // AuthController.logout();
+                        AuthController.signin(data as SignupType);
 
                         util.toggleClassName(this.children.inputLogin, 'show');
                         util.toggleClassName(this.children.inputPassword, 'show');                     
@@ -73,7 +78,7 @@ export class PageAuthorization extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/registration');
+                        router.go('/sign-up');
                     }
                 }
             })
