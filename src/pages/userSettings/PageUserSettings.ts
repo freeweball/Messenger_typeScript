@@ -7,6 +7,7 @@ import {FieldLink} from '../../components/fieldLink/FieldLink';
 import {Popup} from '../../components/popup/Popup';
 import {Button} from '../../components/button/Button';
 import router from '../../utils/Router';
+import AuthController from '../../controllers/AuthController';
 
 export class PageUserSettings extends Block {
     public init(): void {
@@ -108,10 +109,21 @@ export class PageUserSettings extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/');
+                        
+                        AuthController.logout();
                     }
                 }
             }),
+            buttonGoToChat: new Button({
+                id: this.id,
+                classes: ['button-arrow'],
+                type: 'button',
+                events: {
+                    click: () => {
+                        router.go('/messenger');
+                    }
+                }
+            })
         }
     }
 

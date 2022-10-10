@@ -3,6 +3,7 @@ import Block from '../../utils/Block';
 import template from './template.hbs';
 
 export interface ChatProps {
+    id: number;
     chatImage?: string;
     chatAlt?: string;
     dialogTitle: string;
@@ -10,6 +11,9 @@ export interface ChatProps {
     dialogText: string;
     infoTime: string;
     infoCountIcon: number;
+    events?: {
+        click: (evt: Event) => void;
+    };
 }
 
 export class Chat extends Block {

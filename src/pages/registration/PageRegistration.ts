@@ -5,6 +5,8 @@ import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
 import router from '../../utils/Router';
+import AuthController from '../../controllers/AuthController';
+import {SignupType} from '../../api/AuthAPI';
 
 export class PageRegistration extends Block {
     public init(): void {
@@ -130,15 +132,17 @@ export class PageRegistration extends Block {
                     click: (evt: Event): void => {
                         evt.preventDefault();
 
-                        console.log(util.getInputValues(
+                        const data = util.getInputValues(
                             this.children.inputName,
                             this.children.inputSurname,
                             this.children.inputLogin,
                             this.children.inputPassword,
                             this.children.inputEmail,
                             this.children.inputPhone,
-                            this.children.inputPasswordRepeat
-                        ));
+                            // this.children.inputPasswordRepeat
+                        );
+
+                        AuthController.signup(data as SignupType);
 
                         util.toggleClassName(this.children.inputName, 'show');
                         util.toggleClassName(this.children.inputSurname, 'show');

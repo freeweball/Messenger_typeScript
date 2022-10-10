@@ -19,7 +19,8 @@ export class ChatInfo extends Block {
         this.children = {
             dropDown: new DropDown({
                 addUser: 'Добавить пользователя',
-                delUser: 'Удалить пользователя'
+                delUser: 'Удалить пользователя',
+                showUsers: 'Показать список пользователей'
             }),
             buttonInfo: new Button({
                 id: this.id,
