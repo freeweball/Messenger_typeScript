@@ -6,6 +6,7 @@ import {ChatInfo} from "../../components/chatInfo/ChatInfo";
 import {ChatContent} from "../../components/chatContent/ChatContent";
 import {ChatInput} from "../../components/chatInput/ChatInput";
 import {withStore} from '../../utils/Store';
+import ChatsController from '../../controllers/ChatsController';
 
 class ChatPage extends Block {
     constructor(props) {
@@ -13,6 +14,8 @@ class ChatPage extends Block {
     }
 
     public init(): void {
+        ChatsController.getChats();
+
         this.children = {
             chatList: new ChatList({}),
             chatInfo: new ChatInfo({

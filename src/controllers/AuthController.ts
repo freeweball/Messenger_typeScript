@@ -1,6 +1,7 @@
 import API, {AuthAPI, SigninType, SignupType} from '../api/AuthAPI';
 import store from '../utils/Store';
 import router from '../utils/Router';
+import {Routes} from '..';
 
 export class AuthController {
     private readonly api: AuthAPI;
@@ -9,42 +10,44 @@ export class AuthController {
         this.api = API;
     }
 
-    async signin(data: SigninType) {
+    public async signin(data: SigninType) {
         try {
             await this.api.signin(data);
 
-            router.go('/settings');
+            router.go(Routes.PageUserSettings);
+
+            await this.saveUser();
         } catch (error: any) {
             console.error(error);
         }
     }
 
-    async signup(data: SignupType) {
+    public async signup(data: SignupType) {
         try {
             await this.api.signup(data);
             
-            await this.fetchUser();
-
-            router.go('/settings');
+            router.go(Routes.PageUserSettings);
+            
+            await this.saveUser();
         } catch (error: any) {
             console.error(error.message);
         }
     }
 
-    async fetchUser() {
-        const user = await this.api.read();
-
-        store.set('user', user);
-    }
-
-    async logout() {
+    public async logout() {
         try {
             await this.api.logout();
 
-            router.go('/');
+            router.go(Routes.PageAuthorization);
         } catch(error: any) {
             console.error(error.message);
         }
+    }
+
+    public async saveUser() {
+        const user = await this.api.read();
+
+        store.set('user', user);
     }
 }
 

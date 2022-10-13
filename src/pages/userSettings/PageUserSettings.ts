@@ -8,9 +8,23 @@ import {Popup} from '../../components/popup/Popup';
 import {Button} from '../../components/button/Button';
 import router from '../../utils/Router';
 import AuthController from '../../controllers/AuthController';
+import store, {StoreEvents} from '../../utils/Store';
+import {Routes} from '../..';
 
 export class PageUserSettings extends Block {
+    constructor() {
+        const state = store.getState() || {};
+
+        super(state.user || {});
+    }
+
     public init(): void {
+        store.on(StoreEvents.Updated, () => {
+            const stateUser = store.getState().user || {};
+
+            this.setProps(stateUser);
+        });
+
         this.children = {
             avatar: new Avatar({
                 url: 'img/avatar.png',
@@ -35,7 +49,7 @@ export class PageUserSettings extends Block {
             inputEmail: new Input({
                 classWrapper: 'text',
                 labelValue: 'Почта',
-                placeholder: 'pochta@yandex.ru',
+                placeholder: this.props.email,
                 type: 'text',
                 disabled: true,
                 name: 'email'
@@ -43,7 +57,7 @@ export class PageUserSettings extends Block {
             inputLogin: new Input({
                 classWrapper: 'text',
                 labelValue: 'Логин',
-                placeholder: 'ivanivanov',
+                placeholder: this.props.email,
                 type: 'text',
                 disabled: true,
                 name: 'login'
@@ -51,7 +65,7 @@ export class PageUserSettings extends Block {
             inputName: new Input({
                 classWrapper: 'text',
                 labelValue: 'Имя',
-                placeholder: 'Иван',
+                placeholder: this.props.first_name,
                 type: 'text',
                 disabled: true,
                 name: 'first_name'
@@ -59,7 +73,7 @@ export class PageUserSettings extends Block {
             inputSurname: new Input({
                 classWrapper: 'text',
                 labelValue: 'Фамилия',
-                placeholder: 'Иванов',
+                placeholder: this.props.second_name,
                 type: 'text',
                 disabled: true,
                 name: 'second_name'
@@ -67,15 +81,15 @@ export class PageUserSettings extends Block {
             inputNikName: new Input({
                 classWrapper: 'text',
                 labelValue: 'Имя в чате',
-                placeholder: 'Иван',
+                placeholder: this.props.display_name,
                 type: 'text',
                 disabled: true,
-                name: 'name_in_chat'
+                name: 'display_name'
             }),
             inputPhone: new Input({
                 classWrapper: 'text',
                 labelValue: 'Телефон',
-                placeholder: '+7 (909) 967 30 30',
+                placeholder: this.props.phone,
                 type: 'tel',
                 disabled: true,
                 name: 'phone'
@@ -87,7 +101,7 @@ export class PageUserSettings extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/changeUserData');
+                        router.go(Routes.PageChangeUserData);
                     }
                 }
             }),
@@ -98,7 +112,7 @@ export class PageUserSettings extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/changeUserPassword');
+                        router.go(Routes.PageChangeUserPassword);
                     }
                 }
             }),
@@ -120,7 +134,7 @@ export class PageUserSettings extends Block {
                 type: 'button',
                 events: {
                     click: () => {
-                        router.go('/messenger');
+                        router.go(Routes.PageChat);
                     }
                 }
             })

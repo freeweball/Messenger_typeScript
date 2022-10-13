@@ -11,7 +11,7 @@ import AuthController from './controllers/AuthController';
 import './style/style.less';
 import Router from './utils/Router';
 
-enum Routes {
+export enum Routes {
     Page404 = '/404',
     Page500 = '/500',
     PageAuthorization = '/',
@@ -49,7 +49,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
       
         try {
-          await AuthController.fetchUser();
+          await AuthController.saveUser();
       
           Router.start();
       

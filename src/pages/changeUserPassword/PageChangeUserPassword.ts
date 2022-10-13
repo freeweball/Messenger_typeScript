@@ -5,10 +5,26 @@ import {Avatar} from '../../components/avatar/Avatar'
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
+import {Routes} from '../..';
+import UsersettingsController from '../../controllers/UsersettingsController';
+import router from '../../utils/Router';
+import store, {StoreEvents} from '../../utils/Store';
 
 export class PageChangeUserPassword extends Block {
+    constructor() {
+        const state = store.getState() || {};
+
+        super(state.password || {})
+    }
+
     public init(): void {
         const util = new Util();
+
+        store.on(StoreEvents.Updated, () => {
+            const statePassword = store.getState().password || {};
+
+            this.setProps(statePassword);
+        });
 
         this.children = {
             avatar: new Avatar({
@@ -20,7 +36,7 @@ export class PageChangeUserPassword extends Block {
             inputPassword: new Input({
                 classWrapper: 'text',
                 type: 'password',
-                name: 'password',
+                name: 'oldPassword',
                 placeholder: '•••••••••',
                 labelValue: 'Старый пароль',
                 errorValue: 'Не верный пароль',
@@ -56,13 +72,24 @@ export class PageChangeUserPassword extends Block {
                     click: (evt: Event): void => {
                         evt.preventDefault();
 
-                        console.log(util.getInputValues(
+                        const data = util.getInputValues(
                             this.children.inputPassword,
                             this.children.inputPasswordNew,
-                            this.children.inputPasswordRepeat
-                        ));
+                        );
+
+                        UsersettingsController.changePassword(data);
 
                         util.toggleClassName(this.children.inputPassword, 'show');
+                    }
+                }
+            }),
+            buttonGoToSettings: new Button({
+                id: this.id,
+                classes: ['button-arrow'],
+                type: 'button',
+                events: {
+                    click: () => {
+                        router.go(Routes.PageUserSettings);
                     }
                 }
             })

@@ -10,7 +10,7 @@ export class ChatsController {
 
     public async getChats(): Promise<void> {
         try {
-            await this.api.getChats();
+            // await this.api.getChats();
 
             await this._saveChats();
         } catch(error) {
@@ -50,7 +50,7 @@ export class ChatsController {
 
     public async getUsers(id: GetUsers) {
         try {
-            await this.api.getUsers(id);
+            // await this.api.getUsers(id);
 
             await this._saveUsers(id);
         } catch(error) {
@@ -77,7 +77,7 @@ export class ChatsController {
     private async _saveUsers(id: GetUsers) {
         const users = await this.api.getUsers(id);
 
-        store.set('users', users);
+        store.set('usersInChat', users);
     }
 
     // private async _saveToken(id: GetTokenType) {

@@ -1,5 +1,6 @@
 import API, {UsersettingsAPI} from '../api/UsersettingsAPI';
 import store from '../utils/Store';
+import {ChangeDataType, ChangePasswordType} from '../api/UsersettingsAPI';
 
 export class UsersettingsController {
     private readonly api: UsersettingsAPI;
@@ -8,9 +9,10 @@ export class UsersettingsController {
         this.api = API;
     }
 
-    async changeData(data) {
+    async changeData(data: ChangeDataType) {
         try {
-            return await this.api.changeData(data);
+            // await this.api.changeData(data);
+            this._saveUserData(data);
         } catch(error){
             console.error(error);
         }
@@ -18,15 +20,16 @@ export class UsersettingsController {
 
     async changeAvatar(data) {
         try {
-            return await this.api.changeAvatar(data);
+            await this.api.changeAvatar(data);
         } catch(error) {
             console.error(error);
         }
     }
 
-    async changePassword(data) {
+    async changePassword(data: ChangePasswordType) {
         try {
-            return await this.api.changePassword(data);
+            // await this.api.changePassword(data);
+            this._savePassword(data);
         } catch(error) {
             console.error(error);
         }
@@ -36,6 +39,18 @@ export class UsersettingsController {
         const user = await this.api.searchUser(login);
 
         store.set('findUsers', user);
+    }
+
+    private async _saveUserData(data: ChangeDataType) {
+        const userData = await this.api.changeData(data);
+
+        store.set('user', userData);
+    }
+
+    private async _savePassword(data: ChangePasswordType) {
+        const password = await this.api.changePassword(data);
+
+        store.set('password', password);
     }
 }
 

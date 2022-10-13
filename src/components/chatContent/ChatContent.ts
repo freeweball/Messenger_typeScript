@@ -12,17 +12,31 @@ export interface ChatContentProps {
 
 export class ChatContent extends Block {
     constructor(props: ChatContentProps) {
-        super(props);
+        const state = store.getState() || {};
+
+
+        super(state || {});
     }
 
     public init(): void {
         store.on(StoreEvents.Updated, () => {
-            this.children.users = store.getState()?.users?.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
-            this.setProps({users: store.getState().users} || {});
+            const state = {
+                usersInChat: store.getState().usersInChat || []
+            }
+
+            // this._addUsersInfo(state.usersInChat)
+            // this.children.users = store.getState()?.users?.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
+            // this.setProps({users: store.getState().users} || {});
         });
 
         this.children.childrens = [];
         this.children.users = [];
+    }
+
+    private _addUsersInfo(state) {
+        this.children.users = state.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
+        // this.setProps({users: store.getState().users} || {});
+        this.setProps(this.children.users);
     }
 
     private _addMessage(state): void {
