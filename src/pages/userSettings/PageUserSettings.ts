@@ -4,12 +4,12 @@ import template from './template.hbs';
 import {Avatar} from '../../components/avatar/Avatar';
 import {Input} from '../../components/input/Input';
 import {FieldLink} from '../../components/fieldLink/FieldLink';
-import {Popup} from '../../components/popup/Popup';
 import {Button} from '../../components/button/Button';
 import router from '../../utils/Router';
 import AuthController from '../../controllers/AuthController';
 import store, {StoreEvents} from '../../utils/Store';
 import {Routes} from '../..';
+import UsersettingsController from '../../controllers/UsersettingsController';
 
 export class PageUserSettings extends Block {
     constructor() {
@@ -19,31 +19,28 @@ export class PageUserSettings extends Block {
     }
 
     public init(): void {
+        const http = 'https://ya-praktikum.tech/api/v2/resources';
+
         store.on(StoreEvents.Updated, () => {
             const stateUser = store.getState().user || {};
 
             this.setProps(stateUser);
+            this.children.avatar.setProps({url: `${http}${this.props.avatar}`});
+
         });
 
         this.children = {
             avatar: new Avatar({
-                url: 'img/avatar.png',
+                url: `${http}${this.props.avatar}`,
                 alt: 'avatar',
                 text: 'Поменять аватар',
                 title: 'Иван',
                 events: {
                     click: () => {
-                        this.children.popup = new Popup({
-                            title: 'Загрузите файл',
-                            text: 'Выбрать файл на компьютере',
-                            button: () => new Button({
-                                id: this.id,
-                                value: 'Поменять',
-                                type: 'button'
-                            })
-                        });
-                        this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-                    },
+                        const input = this.element?.querySelector('input');
+
+                        input && this._changeAvatar(input);
+                    }
                 }
             }),
             inputEmail: new Input({
@@ -139,6 +136,19 @@ export class PageUserSettings extends Block {
                 }
             })
         }
+    }
+
+    private _changeAvatar(element: any) {
+        element?.addEventListener('change', () => {
+            const file = element?.files?.[0];
+
+            if (file) {
+                const formData = new FormData();
+                
+                formData.append('avatar', file);
+                UsersettingsController.changeAvatar(formData);
+            }
+        })
     }
 
     public render(): DocumentFragment {

@@ -4,7 +4,6 @@ import template from './template.hbs';
 import {Message, MessageType} from '../message/Message';
 import store, {StoreEvents} from '../../utils/Store';
 import {Button} from '../button/Button';
-import ChatsController from '../../controllers/ChatsController';
 
 export interface ChatContentProps {
     dummyText: string;
@@ -24,9 +23,7 @@ export class ChatContent extends Block {
                 usersInChat: store.getState().usersInChat || []
             }
 
-            // this._addUsersInfo(state.usersInChat)
-            // this.children.users = store.getState()?.users?.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
-            // this.setProps({users: store.getState().users} || {});
+            this._addUsersInfo(state.usersInChat)
         });
 
         this.children.childrens = [];
@@ -34,8 +31,7 @@ export class ChatContent extends Block {
     }
 
     private _addUsersInfo(state) {
-        this.children.users = state.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
-        // this.setProps({users: store.getState().users} || {});
+        this.children.users = state.map((user: any) => new Button({value: `id: ${user.id}`, type: 'button', id: user.id, classes: ['user__inChat']}));
         this.setProps(this.children.users);
     }
 

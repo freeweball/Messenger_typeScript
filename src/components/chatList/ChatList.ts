@@ -6,9 +6,7 @@ import {Search} from '../search/Search';
 import {Chat} from '../chat/chat';
 import router from '../../utils/Router';
 import ChatsController from '../../controllers/ChatsController';
-import UsersettingsController from '../../controllers/UsersettingsController';
 import store, {StoreEvents} from '../../utils/Store';
-import {Socket} from '../../utils/Soccet';
 import {Routes} from '../..';
 export interface ChatListProps {
 
@@ -89,16 +87,9 @@ export class ChatList extends Block {
                 click: (evt: Event) => {
                     this._addActiveClass(evt);
 
+                    store.set('chatId', data.id);
+
                     ChatsController.getUsers(data.id);
-                    // UsersettingsController.searchUser({login: 'alex'})
-                    // ChatsController.addUsers({'users': [32, 6126, 5535], 'chatId': data.id});
-
-                    // const userId = store.getState().user.id;
-
-                    // ChatsController.getToken(data.id)
-                    //     .then(value => {
-                    //         const socket = new Socket(userId, data.id, value.token);
-                    //     })
                 }
             }
         })

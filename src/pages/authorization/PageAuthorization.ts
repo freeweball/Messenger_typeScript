@@ -63,9 +63,8 @@ export class PageAuthorization extends Block {
                             this.children.inputPassword
                         );
 
-                        // AuthController.logout();
                         AuthController.signin(data as SignupType);
-
+                        
                         util.toggleClassName(this.children.inputLogin, 'show');
                         util.toggleClassName(this.children.inputPassword, 'show');                     
                     }

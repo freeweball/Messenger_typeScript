@@ -20,19 +20,28 @@ export class PageChangeUserData extends Block {
 
     public init(): void {
         const util = new Util();
+        const http = 'https://ya-praktikum.tech/api/v2/resources';
 
         store.on(StoreEvents.Updated, () => {
             const stateUser = store.getState().user || {};
             
             this.setProps(stateUser);
+            this.children.avatar.setProps({url: `${http}${this.props.avatar}`});
         });
 
         this.children = {
             avatar: new Avatar({
-                url: 'img/avatar.png',
+                url: `${http}${this.props.avatar}`,
                 alt: 'avatar',
                 text: 'Поменять аватар',
-                title: 'Иван'
+                title: 'Иван',
+                events: {
+                    click: () => {
+                        const input = this.element?.querySelector('input');
+
+                        input && this._changeAvatar(input);
+                    }
+                }
             }),
             inputEmail: new Input({
                 classWrapper: 'text',
@@ -159,6 +168,19 @@ export class PageChangeUserData extends Block {
                 }
             })
         }
+    }
+
+    private _changeAvatar(element: any) {
+        element?.addEventListener('change', () => {
+            const file = element?.files?.[0];
+
+            if (file) {
+                const formData = new FormData();
+                
+                formData.append('avatar', file);
+                UsersettingsController.changeAvatar(formData);
+            }
+        })
     }
 
     public render(): DocumentFragment {

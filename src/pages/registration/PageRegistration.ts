@@ -140,7 +140,6 @@ export class PageRegistration extends Block {
                             this.children.inputPassword,
                             this.children.inputEmail,
                             this.children.inputPhone,
-                            // this.children.inputPasswordRepeat
                         );
 
                         AuthController.signup(data as SignupType);
