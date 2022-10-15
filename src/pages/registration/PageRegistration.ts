@@ -7,6 +7,7 @@ import {Util} from '../../utils/Util';
 import router from '../../utils/Router';
 import AuthController from '../../controllers/AuthController';
 import {SignupType} from '../../api/AuthAPI';
+import {Routes} from '../..';
 
 export class PageRegistration extends Block {
     public init(): void {
@@ -139,7 +140,6 @@ export class PageRegistration extends Block {
                             this.children.inputPassword,
                             this.children.inputEmail,
                             this.children.inputPhone,
-                            // this.children.inputPasswordRepeat
                         );
 
                         AuthController.signup(data as SignupType);
@@ -161,7 +161,7 @@ export class PageRegistration extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/');
+                        router.go(Routes.PageAuthorization);
                     }
                 }
             })

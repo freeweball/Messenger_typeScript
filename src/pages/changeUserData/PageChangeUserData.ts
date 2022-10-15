@@ -5,22 +5,48 @@ import {Avatar} from '../../components/avatar/Avatar';
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
+import UsersettingsController from '../../controllers/UsersettingsController';
+import store, {StoreEvents} from '../../utils/Store';
+import router from '../../utils/Router';
+import {Routes} from '../..';
+
 
 export class PageChangeUserData extends Block {
+    constructor() {
+        const state = store.getState() || {};
+
+        super(state.user || {});
+    }
+
     public init(): void {
         const util = new Util();
+        const http = 'https://ya-praktikum.tech/api/v2/resources';
+
+        store.on(StoreEvents.Updated, () => {
+            const stateUser = store.getState().user || {};
+            
+            this.setProps(stateUser);
+            this.children.avatar.setProps({url: `${http}${this.props.avatar}`});
+        });
 
         this.children = {
             avatar: new Avatar({
-                url: 'img/avatar.png',
+                url: `${http}${this.props.avatar}`,
                 alt: 'avatar',
                 text: 'Поменять аватар',
-                title: 'Иван'
+                title: 'Иван',
+                events: {
+                    click: () => {
+                        const input = this.element?.querySelector('input');
+
+                        input && this._changeAvatar(input);
+                    }
+                }
             }),
             inputEmail: new Input({
                 classWrapper: 'text',
                 labelValue: 'Почта',
-                placeholder: 'pochta@yandex.ru',
+                placeholder: this.props.email,
                 type: 'text',
                 name: 'email',
                 errorValue: 'Не верная почта',
@@ -36,7 +62,7 @@ export class PageChangeUserData extends Block {
             inputLogin: new Input({
                 classWrapper: 'text',
                 labelValue: 'Логин',
-                placeholder: 'ivanivanov',
+                placeholder: this.props.login,
                 type: 'text',
                 name: 'login',
                 errorValue: 'Не верный логин',
@@ -52,7 +78,7 @@ export class PageChangeUserData extends Block {
             inputName: new Input({
                 classWrapper: 'text',
                 labelValue: 'Имя',
-                placeholder: 'Иван',
+                placeholder: this.props.first_name,
                 type: 'text',
                 name: 'first_name',
                 errorValue: 'Не верное имя',
@@ -68,7 +94,7 @@ export class PageChangeUserData extends Block {
             inputSurname: new Input({
                 classWrapper: 'text',
                 labelValue: 'Фамилия',
-                placeholder: 'Иванов',
+                placeholder: this.props.second_name,
                 type: 'text',
                 name: 'second_name',
                 errorValue: 'Не верная фамилия',
@@ -84,14 +110,14 @@ export class PageChangeUserData extends Block {
             inputNikName: new Input({
                 classWrapper: 'text',
                 labelValue: 'Имя в чате',
-                placeholder: 'Иван',
+                placeholder: this.props.display_name,
                 type: 'text',
-                name: 'name_in_chat'
+                name: 'display_name'
             }),
             inputPhone: new Input({
                 classWrapper: 'text',
                 labelValue: 'Телефон',
-                placeholder: '+7 (909) 967 30 30',
+                placeholder: this.props.phone,
                 type: 'tel',
                 name: 'phone',
                 errorValue: 'Не верный телефон',
@@ -111,16 +137,18 @@ export class PageChangeUserData extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-
-                        console.log(util.getInputValues(
+                        
+                        const data = util.getInputValues(
                             this.children.inputEmail,
                             this.children.inputLogin,
                             this.children.inputName,
                             this.children.inputSurname,
                             this.children.inputNikName,
                             this.children.inputPhone
-                        ));
+                        );
 
+                        UsersettingsController.changeData(data);
+                            
                         util.toggleClassName(this.children.inputEmail, 'show');
                         util.toggleClassName(this.children.inputLogin, 'show');
                         util.toggleClassName(this.children.inputName, 'show');
@@ -128,8 +156,31 @@ export class PageChangeUserData extends Block {
                         util.toggleClassName(this.children.inputPhone, 'show');
                     }
                 }
+            }),
+            buttonGoToSettings: new Button({
+                id: this.id,
+                classes: ['button-arrow'],
+                type: 'button',
+                events: {
+                    click: () => {
+                        router.go(Routes.PageUserSettings);
+                    }
+                }
             })
         }
+    }
+
+    private _changeAvatar(element: any) {
+        element?.addEventListener('change', () => {
+            const file = element?.files?.[0];
+
+            if (file) {
+                const formData = new FormData();
+                
+                formData.append('avatar', file);
+                UsersettingsController.changeAvatar(formData);
+            }
+        })
     }
 
     public render(): DocumentFragment {

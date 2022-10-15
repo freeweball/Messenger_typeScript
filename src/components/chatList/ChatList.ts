@@ -6,21 +6,29 @@ import {Search} from '../search/Search';
 import {Chat} from '../chat/chat';
 import router from '../../utils/Router';
 import ChatsController from '../../controllers/ChatsController';
-import UsersettingsController from '../../controllers/UsersettingsController';
 import store, {StoreEvents} from '../../utils/Store';
-import { withStore } from '../../utils/Store';
-import { Socket } from '../../utils/Soccet';
+import {Routes} from '../..';
 export interface ChatListProps {
 
 }
 
 export class ChatList extends Block {
-    constructor(props: ChatListProps) {
-        super(props);
+    constructor() {
+        const state = store.getState() || {};
+
+        super(state || {});
     }
     
     public init(): void {
-        ChatsController.getChats();
+        store.on(StoreEvents.Updated, () => {
+            const state = {
+                chats: store.getState().chats || [],
+                usersInChat: store.getState().usersInChat || []
+            }
+
+            this._addChats(state.chats);
+        });
+
 
         this.children = {
             buttonGoTo: new Button({
@@ -31,7 +39,7 @@ export class ChatList extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        router.go('/settings');
+                        router.go(Routes.PageUserSettings);
                     }
                 }
             }),
@@ -43,23 +51,26 @@ export class ChatList extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        this._addChat();
+
+                        const element = this.children.addChatTitle.element;
+                        const value = element.querySelector('input').value;
+
+                        this._addChat(value);
                     }
                 }
             }),
+            addChatTitle: new Search({
+                id: this.id,
+                placeholder: 'Название чата',
+                name: 'titleChat',
+            }),
             search: new Search({
-                id: this.id
+                id: this.id,
+                placeholder: 'Поиск',
+                name: 'search'
             }),
             childrens: []
         }
-
-        store.on(StoreEvents.Updated, () => {
-            const stateChats = store.getState()?.chats;
-
-            if (stateChats) {
-                this._addChats(stateChats);
-            }
-        })
     }
 
     private _createChat(data: any) {
@@ -75,16 +86,10 @@ export class ChatList extends Block {
             events: {
                 click: (evt: Event) => {
                     this._addActiveClass(evt);
+
+                    store.set('chatId', data.id);
+
                     ChatsController.getUsers(data.id);
-                    UsersettingsController.searchUser({login: 'alex'})
-                    ChatsController.addUsers({'users': [32, 6126, 5535], 'chatId': data.id});
-
-                    const userId = store.getState().user.id;
-
-                    ChatsController.getToken(data.id)
-                        .then(value => {
-                            const socket = new Socket(userId, data.id, value.token);
-                        })
                 }
             }
         })
@@ -103,14 +108,16 @@ export class ChatList extends Block {
     private _addChats(state): void {
         const childrens = [];
 
-        state.forEach((data: any) => childrens.push(this._createChat(data)));
-        this.children.childrens = childrens;
-        
-        this.setProps(this.children.childrens);
+        if (state.length !== this.children.childrens.length) {
+            state.forEach((data: any) => childrens.push(this._createChat(data)));
+            this.children.childrens = childrens;
+            
+            this.setProps(this.children.childrens);
+        }
     }
 
-    private async _addChat() {
-        ChatsController.createChat({'title': '000'})
+    private async _addChat(value: string) {
+        ChatsController.createChat({'title': value});
     }
 
     getUsers(idChat: number) {

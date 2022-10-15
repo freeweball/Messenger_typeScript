@@ -4,7 +4,6 @@ import template from './template.hbs';
 import {Message, MessageType} from '../message/Message';
 import store, {StoreEvents} from '../../utils/Store';
 import {Button} from '../button/Button';
-import ChatsController from '../../controllers/ChatsController';
 
 export interface ChatContentProps {
     dummyText: string;
@@ -12,17 +11,28 @@ export interface ChatContentProps {
 
 export class ChatContent extends Block {
     constructor(props: ChatContentProps) {
-        super(props);
+        const state = store.getState() || {};
+
+
+        super(state || {});
     }
 
     public init(): void {
         store.on(StoreEvents.Updated, () => {
-            this.children.users = store.getState()?.users?.map((user: any) => new Button({value: user.id, type: 'button', id: user.id, classes: ['user__inChat']}));
-            this.setProps({users: store.getState().users} || {});
+            const state = {
+                usersInChat: store.getState().usersInChat || []
+            }
+
+            this._addUsersInfo(state.usersInChat)
         });
 
         this.children.childrens = [];
         this.children.users = [];
+    }
+
+    private _addUsersInfo(state) {
+        this.children.users = state.map((user: any) => new Button({value: `id: ${user.id}`, type: 'button', id: user.id, classes: ['user__inChat']}));
+        this.setProps(this.children.users);
     }
 
     private _addMessage(state): void {

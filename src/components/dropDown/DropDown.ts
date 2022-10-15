@@ -2,8 +2,9 @@ import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
 import {Button} from '../button/Button';
-import store from '../../utils/Store';
-import ChatsController from '../../controllers/ChatsController';
+import store, {StoreEvents} from '../../utils/Store';
+import {Input} from '../input/Input';
+import UsersettingsController from '../../controllers/UsersettingsController';
 
 export interface DropdownProps {
     addUser?: string;
@@ -12,34 +13,45 @@ export interface DropdownProps {
     photo?: string;
     file?: string;
     location?: string;
+    classList?: Array<string>;
 }
 
 export class DropDown extends Block {
     constructor(props: DropdownProps) {
-        super(props);
+        const state = store.getState() || {};
+
+        super(state || {});
     }
 
     public init(): void {
+        store.on(StoreEvents.Updated, () => {
+            const state = {
+                dropdown: store.getState().dropdown
+            }
+
+            state.dropdown && this.setProps(state.dropdown);
+        });
+
         this.children = {
             buttonAdd: new Button({
                 id: this.id,
                 classes: ['button-add'],
-                type: 'button'
+                type: 'button',
+                events: {
+                    click: () => {
+                        this._searchUser();
+                        store.set('addUserInChat', true);
+                    }
+                }
             }),
             buttonDel: new Button({
-                id: this.id,
-                classes: ['button-close'],
-                type: 'button'
-            }),
-            buttonShow: new Button({
                 id: this.id,
                 classes: ['button-close'],
                 type: 'button',
                 events: {
                     click: () => {
-                        ChatsController.getChats();
-                        const chats = store.getState().chats;
-                        console.log(chats)
+                        this._searchUser();
+                        store.set('addUserInChat', false);
                     }
                 }
             }),
@@ -59,6 +71,45 @@ export class DropDown extends Block {
                 type: 'button'
             })
         }
+    }
+
+    private _searchUser() {
+        store.set('popup', {classList: ['show']});
+        store.set('dropdown', {classList: ['hide']});
+        store.set('popupChildrens', [
+            new Input({
+                classWrapper: 'input',
+                type: 'text',
+                name: 'searchLogin',
+                classes: ['field__text'],
+                placeholder: 'Логин',
+                labelValue: 'поиск пользователя',
+                validate: false,
+            }),
+            new Button({
+                id: this.id,
+                value: 'Поиск',
+                type: 'submit',
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+
+                        const state = store.getState().popupChildrens;
+
+                        if (state) {
+                            const value = state
+                                .map(children => children.element)
+                                .find(element => element.querySelector('input'))
+                                .querySelector('input').value
+
+                            if (value) {
+                                UsersettingsController.searchUser({login: value});
+                            }
+                        }
+                    }
+                }
+            }),
+        ])
     }
 
     public render(): DocumentFragment {

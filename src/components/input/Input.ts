@@ -15,7 +15,9 @@ export interface InputProps {
     events?: {
         focusin?: () => void;
         focusout?: () => void;
-    }
+        click?: (evt: Event) => void;
+    },
+    id?: number;
 }
 
 export class Input extends Block {
