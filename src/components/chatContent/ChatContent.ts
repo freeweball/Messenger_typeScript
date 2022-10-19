@@ -1,7 +1,9 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
-import {Message} from '../message/Message';
+import {Message, MessageType} from '../message/Message';
+import store, {StoreEvents} from '../../utils/Store';
+import {Button} from '../button/Button';
 
 export interface ChatContentProps {
     dummyText: string;
@@ -9,24 +11,46 @@ export interface ChatContentProps {
 
 export class ChatContent extends Block {
     constructor(props: ChatContentProps) {
-        super(props);
+        const state = store.getState() || {};
+
+
+        super(state || {});
     }
 
     public init(): void {
-        this.children = {
-            message1: new Message({
-                date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
-                text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
-                time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
+        store.on(StoreEvents.Updated, () => {
+            const state = {
+                usersInChat: store.getState().usersInChat || []
+            }
 
-            }),
-            message2: new Message({
-                classes: ['interlocutor'],
-                date: new Date().toLocaleString('ru', {day: 'numeric', month: 'long'}),
-                text: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.',
-                time: new Date().toLocaleString('ru', {hour: 'numeric', minute: 'numeric',})
-            }),
-        }
+            this._addUsersInfo(state.usersInChat)
+        });
+
+        this.children.childrens = [];
+        this.children.users = [];
+    }
+
+    private _addUsersInfo(state) {
+        this.children.users = state.map((user: any) => new Button({value: `id: ${user.id}`, type: 'button', id: user.id, classes: ['user__inChat']}));
+        this.setProps(this.children.users);
+    }
+
+    private _addMessage(state): void {
+        const childrens = [];
+
+        childrens.push(this._createMessage(state));
+        this.children.childrens = childrens;
+        
+        this.setProps(this.children.childrens);
+    }
+
+    private _createMessage(data: MessageType) {
+        return new Message({
+            classes: data.classes,
+            date: data.date,
+            content: data.content,
+            time: data.time
+        })
     }
 
     public render(): DocumentFragment {

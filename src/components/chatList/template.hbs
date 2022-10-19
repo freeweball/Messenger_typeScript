@@ -1,10 +1,15 @@
 <div class="chat-list">
     <ul>
-        <li class="chat-list__button-wrapper">{{{ buttonGoTo }}}</dli>
+        <li class="chat-list__button-wrapper">{{{ buttonGoTo }}}</li>
+        <li class="chat-list__button-wrapper chat-list__button-wrapper--block">
+            <div class="chat-list__add-title">{{{ addChatTitle }}}</div>
+            <div class="chat-list__add-button">{{{ buttonAddChat }}}</div>
+        </li>
         <li class="chat-list__search-wrapper">{{{ search }}}</li>
     </ul>
     <ul class="chat__items">
-        <li>{{{ chat }}}</li>
-        <li></li>
+        {{#each childrens}}
+            <li>{{{ this }}}</li>
+        {{/each}}
     </ul>
 </div>

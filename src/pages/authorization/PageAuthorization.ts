@@ -1,24 +1,18 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
-
-export interface PageAuthorizationProps {
-    title: string;
-}
+import router from '../../utils/Router';
+import AuthController from '../../controllers/AuthController';
+import {SignupType} from '../../api/AuthAPI';
+import {Routes} from '../..';
 
 export class PageAuthorization extends Block {
-    private _util: Util;
-    
-    constructor(props: PageAuthorizationProps) {
-        super(props);
-
-        this._util = new Util();
-    }
-
     public init(): void {
+        const util = new Util();
+
         this.children = {
             inputLogin: new Input({
                 classWrapper: 'input',
@@ -31,10 +25,10 @@ export class PageAuthorization extends Block {
                 validate: true,
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputLogin, 'show');
+                        util.removeClassName(this.children.inputLogin, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputLogin, 'show');
+                        util.toggleClassName(this.children.inputLogin, 'show');
                     }
                 }
             }),
@@ -49,10 +43,10 @@ export class PageAuthorization extends Block {
                 validate: true,
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputPassword, 'show');
+                        util.removeClassName(this.children.inputPassword, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');
                     }
                 }
             }),
@@ -63,14 +57,16 @@ export class PageAuthorization extends Block {
                 events: {
                     click: (evt: Event): void => {
                         evt.preventDefault();
-                        
-                        console.log(this._util.getInputValues(
+
+                        const data = util.getInputValues(
                             this.children.inputLogin,
                             this.children.inputPassword
-                        ));
+                        );
 
-                        this._util.toggleClassName(this.children.inputLogin, 'show');
-                        this._util.toggleClassName(this.children.inputPassword, 'show');                     
+                        AuthController.signin(data as SignupType);
+                        
+                        util.toggleClassName(this.children.inputLogin, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');                     
                     }
                 }
             }),
@@ -78,7 +74,13 @@ export class PageAuthorization extends Block {
                 id: 'button_account-empty',
                 value: 'Нет аккаунта?',
                 type: 'button',
-                classes: ['button--white']
+                classes: ['button--white'],
+                events: {
+                    click: (evt: Event): void => {
+                        evt.preventDefault();
+                        router.go(Routes.PageRegistration);
+                    }
+                }
             })
         }
     }

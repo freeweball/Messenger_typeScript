@@ -1,16 +1,16 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 
-export interface MessageProps {
+export type MessageType = {
     classes?: Array<string>;
     date?: string;
-    text?: string;
+    content?: string;
     time?: string;
 }
 
 export class Message extends Block {
-    constructor(props: MessageProps) {
+    constructor(props: MessageType) {
         super(props);
     }
 

@@ -14,3 +14,38 @@
     display: flex;
     justify-content: end;
 }
+
+.chat__items {
+    li {
+        &.active {
+            background-color: rgba(239, 239, 239, 0.5);
+        }
+    }
+}
+
+.chat-list__add-title {
+    width: 60%;
+
+    label {
+        display: none;
+    }
+
+    .search {
+        input {
+            padding-left: 50px;
+        }
+    }
+}
+
+.chat-list__add-button {
+    flex-grow: 1;
+
+    button {
+        margin-left: auto;
+    }
+}
+
+.chat-list__button-wrapper--block {
+    align-items: center;
+    justify-content: center;
+}

@@ -1,25 +1,31 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Avatar} from '../../components/avatar/Avatar'
 import {Input} from '../../components/input/Input';
 import {Button} from '../../components/button/Button';
 import {Util} from '../../utils/Util';
-
-export interface PageChangeUserPasswordProps {
-
-}
+import {Routes} from '../..';
+import UsersettingsController from '../../controllers/UsersettingsController';
+import router from '../../utils/Router';
+import store, {StoreEvents} from '../../utils/Store';
 
 export class PageChangeUserPassword extends Block {
-    private _util: Util;
+    constructor() {
+        const state = store.getState() || {};
 
-    constructor(props: PageChangeUserPasswordProps) {
-        super(props);
-
-        this._util = new Util();
+        super(state.password || {})
     }
 
     public init(): void {
+        const util = new Util();
+
+        store.on(StoreEvents.Updated, () => {
+            const statePassword = store.getState().password || {};
+
+            this.setProps(statePassword);
+        });
+
         this.children = {
             avatar: new Avatar({
                 url: 'img/avatar.png',
@@ -30,16 +36,16 @@ export class PageChangeUserPassword extends Block {
             inputPassword: new Input({
                 classWrapper: 'text',
                 type: 'password',
-                name: 'password',
+                name: 'oldPassword',
                 placeholder: '•••••••••',
                 labelValue: 'Старый пароль',
                 errorValue: 'Не верный пароль',
                 events: {
                     focusin: () => {
-                        this._util.removeClassName(this.children.inputPassword, 'show');
+                        util.removeClassName(this.children.inputPassword, 'show');
                     },
                     focusout: () => {
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        util.toggleClassName(this.children.inputPassword, 'show');
                     }
                 }
             }),
@@ -66,13 +72,24 @@ export class PageChangeUserPassword extends Block {
                     click: (evt: Event): void => {
                         evt.preventDefault();
 
-                        console.log(this._util.getInputValues(
+                        const data = util.getInputValues(
                             this.children.inputPassword,
                             this.children.inputPasswordNew,
-                            this.children.inputPasswordRepeat
-                        ));
+                        );
 
-                        this._util.toggleClassName(this.children.inputPassword, 'show');
+                        UsersettingsController.changePassword(data);
+
+                        util.toggleClassName(this.children.inputPassword, 'show');
+                    }
+                }
+            }),
+            buttonGoToSettings: new Button({
+                id: this.id,
+                classes: ['button-arrow'],
+                type: 'button',
+                events: {
+                    click: () => {
+                        router.go(Routes.PageUserSettings);
                     }
                 }
             })

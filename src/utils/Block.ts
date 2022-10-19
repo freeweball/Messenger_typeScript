@@ -11,7 +11,7 @@ export default class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(6);
   protected props: P;
-  public children: Record<string, Block>;
+  public children: Record<string, Block> | any
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
 
@@ -109,10 +109,22 @@ export default class Block<P extends Record<string, any> = any> {
 
   protected compile(template: (context: any) => string, context: any): DocumentFragment {
     const contextAndStubs = { ...context };
-
+    
     Object.entries(this.children).forEach(([name, component]) => {
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-    });
+        const arr: Array<string> = [];
+
+        if (Array.isArray(component)) {
+          component.forEach(el => {
+            arr.push(`<div data-id="${el.id}"></div>`);
+        });
+
+        contextAndStubs[name] = arr;
+
+        } else {
+            contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+        }
+
+      });
 
     const html = template(contextAndStubs);
 
@@ -121,17 +133,28 @@ export default class Block<P extends Record<string, any> = any> {
     temp.innerHTML = html;
 
     Object.entries(this.children).forEach(([_, component]) => {
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+        if (Array.isArray(component)) {
+          component.forEach(el => {
+            const stub = temp.content.querySelector(`[data-id="${el.id}"]`);
+        
+            if (!stub) {
+              return;
+            }
+            
+            el.getContent()?.append(...Array.from(stub.childNodes));
+            stub.replaceWith(el.getContent()!);
+          })
+        } else {
+            const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+        
+            if (!stub) {
+            return;
+            }
 
-      if (!stub) {
-        return;
-      }
-
-      component.getContent()?.append(...Array.from(stub.childNodes));
-
-      stub.replaceWith(component.getContent()!);
-
-    });
+            component.getContent()?.append(...Array.from(stub.childNodes));
+            stub.replaceWith(component.getContent()!);
+        }
+      });
 
     return temp.content;
   }

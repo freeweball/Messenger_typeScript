@@ -1,6 +1,6 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Button} from '../button/Button';
 import {DropDown} from '../dropDown/DropDown';
 
@@ -17,10 +17,7 @@ export class ChatInfo extends Block {
 
     public init(): void {
         this.children = {
-            dropDown: new DropDown({
-                addUser: 'Добавить пользователя',
-                delUser: 'Удалить пользователя'
-            }),
+            dropDown: new DropDown({}),
             buttonInfo: new Button({
                 id: this.id,
                 classes: ['chat-info__menu-button'],

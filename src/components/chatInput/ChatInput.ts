@@ -1,9 +1,10 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 import {Button} from '../button/Button';
 import {Search} from '../search/Search';
 import {DropDown} from '../dropDown/DropDown';
+import store from '../../utils/Store';
 
 export interface ChatInputProps {
 
@@ -36,6 +37,13 @@ export class ChatInput extends Block {
                 id: this.id,
                 classes: ['button-arrow--rotate'],
                 type: 'button',
+                events: {
+                    click: () => {
+                        const input = this.children.inputMessage.element.querySelector('input');
+                        
+                        store.set('message', {content: input.value});
+                    }
+                }
             })
         }
     }

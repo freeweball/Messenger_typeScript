@@ -1,15 +1,19 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 
 export interface ChatProps {
+    id: number;
     chatImage?: string;
     chatAlt?: string;
     dialogTitle: string;
-    dialogSubText: string;
+    dialogSubText?: string;
     dialogText: string;
     infoTime: string;
     infoCountIcon: number;
+    events?: {
+        click: (evt: Event) => void;
+    };
 }
 
 export class Chat extends Block {

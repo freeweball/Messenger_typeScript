@@ -1,6 +1,6 @@
+import './style.less';
 import Block from '../../utils/Block';
 import template from './template.hbs';
-import './style.less';
 
 export interface InputProps {
     classWrapper: 'input' | 'text';
@@ -15,7 +15,9 @@ export interface InputProps {
     events?: {
         focusin?: () => void;
         focusout?: () => void;
-    }
+        click?: (evt: Event) => void;
+    },
+    id?: number;
 }
 
 export class Input extends Block {
