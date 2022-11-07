@@ -73,7 +73,7 @@ export default class Block<P extends Record<string, any> = any> {
   public dispatchComponentDidMount(): void {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach(child => child.dispatchComponentDidMount());
+    Object.values(this.children).forEach((child: any) => child.dispatchComponentDidMount());
   }
 
   private _componentDidUpdate(oldProps: any, newProps: any): void {
@@ -110,7 +110,7 @@ export default class Block<P extends Record<string, any> = any> {
   protected compile(template: (context: any) => string, context: any): DocumentFragment {
     const contextAndStubs = { ...context };
     
-    Object.entries(this.children).forEach(([name, component]) => {
+    Object.entries(this.children).forEach(([name, component]: any) => {
         const arr: Array<string> = [];
 
         if (Array.isArray(component)) {
@@ -132,7 +132,7 @@ export default class Block<P extends Record<string, any> = any> {
 
     temp.innerHTML = html;
 
-    Object.entries(this.children).forEach(([_, component]) => {
+    Object.entries(this.children).forEach(([_, component]: any) => {
         if (Array.isArray(component)) {
           component.forEach(el => {
             const stub = temp.content.querySelector(`[data-id="${el.id}"]`);
